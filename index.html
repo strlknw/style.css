@@ -911,7 +911,7 @@ URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
       var LAT=59.9490,LON=30.3870,Z=16,n=Math.pow(2,Z),la=LAT*Math.PI/180;
       var xt=(LON+180)/360*n, yt=(1-Math.log(Math.tan(la)+1/Math.cos(la))/Math.PI)/2*n;
       var ix=Math.floor(xt)-1, iy=Math.floor(yt)-1, h='';
-      for(var r=0;r<3;r++)for(var c=0;c<3;c++)h+='<img alt="" src="https://basemaps.cartocdn.com/light_all/'+Z+'/'+(ix+c)+'/'+(iy+r)+'@2x.png">';
+      for(var r=0;r<3;r++)for(var c=0;c<3;c++)h+='<img alt="" src="https://tile.openstreetmap.org//light_all/'+Z+'/'+(ix+c)+'/'+(iy+r)+'@.png">';
       m.innerHTML='<div class="mt" style="left:calc(50% - '+((xt-ix)*256).toFixed(1)+'px);top:calc(50% - '+((yt-iy)*256).toFixed(1)+'px)">'+h+'</div><i class="pin"></i><span class="mc">© OpenStreetMap · CARTO</span>';
     })();
 
