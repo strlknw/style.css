@@ -415,6 +415,22 @@
 .it { display: flex !important; flex-direction: column; }
 .it .ph, .it img.ph { aspect-ratio: 4/5 !important; height: auto !important; width: 100% !important; object-fit: cover !important; display: block; background-color: #eee; }
 .it p { min-height: 45px; }
+/* ====== КРАСИВАЯ КАРТА ====== */
+#c6 .map {
+  background-image: url('https://static-maps.yandex.ru/1.x/?ll=30.3870,59.9490&z=15&l=map&size=650,450') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  filter: grayscale(1) contrast(1.1); /* Делает карту ч/б */
+}
+#c6 .mt { display: none !important; } /* Прячет старые куски карты */
+#c6 .pin { 
+  z-index: 5 !important; 
+  background: #000 !important; 
+  box-shadow: 0 0 0 4px #fff, 0 0 0 5px #000 !important; 
+  width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; position: absolute; left: 50%; top: 50%;
+} 
+/* Чтобы линии были ПОВЕРХ карты */
+#lrax { z-index: 99 !important; } 
 </style>
 
 <div id="app" data-v="home" data-tl="limin-v17">
