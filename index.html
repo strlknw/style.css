@@ -436,6 +436,17 @@
    там просто пропал бы. Делаем его белым, и он ведёт себя так же, как текст
    (светлый на тёмном, тёмный на светлом). На остальных страницах остаётся чёрным. */
 #app[data-v=about] #bar .lg img{filter:invert(1)}
+@media(max-width:880px){
+  #app[data-v=home] .f{opacity:.6!important}
+}
+#p-contacts .ct-mob{display:none}
+@media(max-width:880px){
+  #p-contacts .custom-contacts{display:none!important}
+  #p-contacts .ct-mob{display:grid}
+}
+@media(max-width:880px){
+  #lvs{display:none!important}
+}
 </style>
 
 <div id="app" data-v="home" data-tl="limin-v17">
@@ -505,7 +516,19 @@
       <a href="https://t.me/+MouxkGL8oCI1MzUy" target="_blank" rel="noopener" style="position: absolute; top: 30%; left: 10%; width: 20%; height: 10%; cursor: pointer; display: block;"></a>
       <a href="mailto:inbox@terraliminis.ru" target="_blank" rel="noopener" style="position: absolute; top: 30%; left: 40%; width: 25%; height: 10%; cursor: pointer; display: block;"></a>
    </div>
- </div>
+    </div><!-- конец custom-contacts -->
+   <div class="ct ct-mob">
+     <h1>Контакты</h1>
+     <div class="info">
+       <div><small>Telegram</small><p><a href="https://t.me/+MouxkGL8oCI1MzUy" target="_blank" rel="noopener">Telegram-канал</a></p></div>
+       <div><small>Почта</small><p><a href="mailto:inbox@terraliminis.ru">inbox@terraliminis.ru</a></p></div>
+       <div><small>Адрес</small><p>ул. Красного Текстильщика 10-12, Санкт-Петербург</p></div>
+       <div><small>Часы</small><p>Ежедневно 12:00–20:00</p></div>
+     </div>
+     <div class="cbtns"><a href="https://t.me/+MouxkGL8oCI1MzUy" target="_blank" rel="noopener">Telegram</a><a href="mailto:inbox@terraliminis.ru">Почта</a></div>
+     <div class="pt"><small>Партнёры</small><a href="#" class="lgb"></a><a href="#" class="lgb"></a><a href="#" class="lgb"></a><a href="#" class="lgb"></a><a href="#" class="lgb"></a><a href="#" class="lgb"></a><a href="#" class="lgb"></a></div>
+   </div>
+</div>
  <div id="sw"></div>
  <div id="mode"><span data-m="auth">авторы</span><i>/</i><span data-m="works">работы</span></div>
  <div id="bar">
@@ -837,7 +860,10 @@ URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
     if(NR && v==='prog'){ v='prog-page'; app.setAttribute('data-v','prog-page'); showPages('prog-page'); }
     else if(!NR && v==='prog-page'){ v='prog'; app.setAttribute('data-v','prog'); showPages('prog'); paint(); }
     if(v==='auth')paint();
+        if(v==='auth')paint();
+    renderGrid();
     lmeasure();
+   lmeasure();
     updateBgFit();
   }
   setMode();
@@ -1107,12 +1133,20 @@ URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
       }
       function openAuthor(i){ai=i;wi=0;mode='auth';go('auth')}
 
-      function renderGrid(){
+            function renderGrid(){
         var items = [];
         WK.forEach(function(w, i){
           if(gridFilter >= 0 && w.a !== gridFilter) return;
-          var tu=tileImg(w.t,w.id);
-          items.push('<div class="it" data-i="'+i+'">'+(tu?'<img class="ph" src="'+tu+'" alt="" loading="lazy">':'<div class="ph" style="'+bgHtml(w.t, tone(i), w.id)+'"></div>')+'<p>IMG '+pad(i+1)+' · '+w.t+'<br>'+A[w.a].f+'</p></div>');    });
+          var nk=String(w.t||'').replace(/\u00A0/g,' ').toLowerCase().trim();
+          var tu=tileImg(w.t,w.id), op=aList(w.t)[0]||'';
+          var useOpen = NR && op && pk(AF,w.t) && !TILE_FIX[nk];
+          var main = useOpen ? op : (tu||op);
+          var alt  = useOpen ? tu : op;
+          var img = main
+            ? '<img class="ph" src="'+main+'" data-f="'+((alt&&alt!==main)?alt:'')+'" onerror="if(this.dataset.f){var f=this.dataset.f;this.dataset.f=\'\';this.src=f}" alt="" decoding="async"'+(NR?'':' loading="lazy"')+'>'
+            : '<div class="ph" style="'+bgHtml(w.t, tone(i), w.id)+'"></div>';
+          items.push('<div class="it" data-i="'+i+'">'+img+'<p>IMG '+pad(i+1)+' · '+w.t+'<br>'+A[w.a].f+'</p></div>');
+        });
         var head = '';
         if(gridFilter >= 0){
           head = '<div class="grid-head"><a href="#" data-reset>← Все работы</a>'+(NR?'':'<a href="#" data-back>← К автору</a>')+'<span>'+A[gridFilter].f+'</span></div>';
