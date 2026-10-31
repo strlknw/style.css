@@ -1205,11 +1205,12 @@ $$('.lb-prev, .lb-next').forEach(function(btn){
               X=Math.min(Math.max(X,W*.15),W*.85);Y=Math.min(Math.max(Y,H*.15),H*.85);
             }
             if(full){X=W/2;Y=H/2}
-            if(v==='auth'&&!NR&&bioOpen){
+                        if(v==='auth'&&!NR&&bioOpen){
               var pl2=Math.min(120,Math.max(80,W*.08)),colW=Math.max(380,Math.min(520,W*.3)),
               minP=pl2+colW+W*.03+50,lines=Math.ceil((A[ai].b||'').length*7.3/colW),
               needH=W*.055+34+lines*21+W*.02+36;
-              X=Math.min(X,Math.max(W-minP-7,W*.3));Y=Math.max(Y,Math.min(needH,H*.9))}
+              X=Math.min(X,Math.max(W-minP-7,W*.3));Y=Math.max(Y,Math.min(needH,H*.9))
+            } /* <--- ВОТ ЭТА СКОБКА БЫЛА ПОТЕРЯНА */
 
             if(v==='prog'){var e=D[di].e,n=e.length;
               if(NR){X=W/2;var mh=Math.min(260,H*.36);Y=Math.min(Math.max(Y,mh),H-mh);if(n<2)Y=H*.94}
