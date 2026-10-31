@@ -1157,9 +1157,10 @@ $$('#bar .lg').forEach(function(s,i){ if(i===0) s.innerHTML='<img src="'+fl+'" a
     function showWork(i){
       cw=(i+WK.length)%WK.length;
       var w=WK[cw];
-      var key=w.t.replace(/\u00A0/g,' ').toLowerCase().trim();
-      var info=WORK_INFO[key];
-      if(!info && key.indexOf('ванькины игрушки')===0) info=WORK_INFO['ванькины игрушки'];
+      function normK(s){return String(s||'').replace(/[\s\u00A0]+/g,' ').toLowerCase().trim().replace(/\s*\(серия\)$/,'')}
+      var nk=normK(w.t), info=null;
+      Object.keys(WORK_INFO).some(function(k){ if(normK(k)===nk){ info=WORK_INFO[k]; return true } });
+      if(!info && nk.indexOf('ванькины игрушки')===0) info=WORK_INFO['ванькины игрушки'];
       if(!info) info={year:'2026', tech:'Техника уточняется', size:'Размеры уточняются', desc:'Описание готовится.'};
       curL=openList(w.t);
       var pic = curL.length
