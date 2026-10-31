@@ -1,0 +1,1067 @@
+
+<script>
+(function(){
+function noWidow(s){return s.replace(new RegExp('(\\s)(через|между|перед|после|без|для|при|над|под|из|от|до|по|на|за|со|об|во|в|к|ко|с|у|и|а|но|не|ни|же|ли|бы|или|это|этот|эта|эти|то|как|что|так|их|ее|её|его|мы|вы|он|она|они|о)(\\s)','gi'),'$1$2\u00A0');}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+function capMed(c){var p=c.split('·');if(p.length===2){return p[0].trim()+' · '+cap(noWidow(p[1].trim()));}return cap(noWidow(c));}
+
+function boot(){
+  var app = document.querySelector('#app[data-tl="limin-v17"]');
+  if(!app){var all=document.querySelectorAll('#app');for(var i=0;i<all.length;i++){if(/Liminis/.test(all[i].textContent)){app=all[i];break}}}
+  if(!app){var el=document.getElementById('app');if(el){app=el;app.setAttribute('data-tl','limin-v17')}}
+  if(!app) return;
+  if(app.dataset.tlBoot==='1') return;
+  app.dataset.tlBoot='1';
+  var allA = document.querySelectorAll('#app');
+  for(var k=0;k<allA.length;k++){ if(allA[k]!==app) allA[k].remove(); }
+  if(app.parentNode!==document.body) document.body.appendChild(app);
+  document.documentElement.style.overflow='hidden';
+  document.body.style.overflow='hidden';
+  document.body.style.margin='0';
+
+  var $=function(s){return app.querySelector(s)};
+  var $$=function(s){return Array.prototype.slice.call(app.querySelectorAll(s))};
+  var pad=function(n){return String(n).padStart(2,'0')};
+  var cl=function(v,a,b){a=(a===undefined?0:a);b=(b===undefined?1:b);return v<a?a:(v>b?b:v)};
+  var lp=function(a,b,t){return a+(b-a)*t};
+  var ss=function(t){return t*t*(3-2*t)};
+  var SPV=function(el,k,val){val=String(val);var c=el._c||(el._c={});if(c[k]!==val){c[k]=val;el.style.setProperty(k,val)}};
+  var NUM=['❶','❷','❸','❹','❺','❻','❼','❽','❾','❿','⓫','⓬','⓭','⓮','⓯','⓰'];
+
+  var A=[
+  {f:'Игорь Култышкин',n:'Култышкин',c:'Москва · фотография',b:'Известный российский фотохудожник и мастер арт-фотографии, член Союза фотохудожников России. В его творчестве ключевым объектом и средой съемки выступает свет.',w:['ванькины игрушки 1','ванькины игрушки 2','ванькины игрушки 3','ванькины игрушки 4','ванькины игрушки 5'],ser:true},
+  {f:'Екатерина Болотова',n:'Болотова',c:'Москва · Mixed Media',b:'Работает с недосягаемым пространством памяти, где сосредоточены элементы личной символической системы. Следы становятся метафорой утраченного, напоминая о хранимых воспоминаниях, черты которых неразличимы.',w:['ласточка','ожог','отблеск','удар']},
+  {f:'Анна Мартыненко',n:'Мартыненко',c:'Тула · инсталляция',b:'В своих произведениях занимается исследованием физической реальности в информационном мире, наблюдает за преобразованием различного рода сигналов, в том числе работает со звуком.',w:['пазл','споры шума']},
+  {f:'Dariella',n:'Dariella',c:'Санкт-Петербург · генеративная графика',b:'Работает с генеративной графикой, цифровым искусством и инсталляциями для брендов и мероприятий.',w:['время цвести (серия)'],ser:true},
+  {f:'Полина Титаренко',n:'Титаренко',c:'Москва · фотография',b:'Автор работает с темами личной памяти, скорби и веры.',w:['на перекрестке А (серия)'],ser:true},
+  {f:'Валентин Фуфаев',n:'Фуфаев',c:'Санкт-Петербург · Mixed Media',b:'Междисциплинарный художник, чья практика действует в поле графики, видеоарта и саунд-дизайна.',w:['my own hand of mysteries']},
+  {f:'Елизавета Неустроева',n:'Неустроева',c:'Москва · фотография',b:'Автор работает в разных медиумах, исследуя опыт утраты ориентации и обретения нового способа чувствовать пространство, ускользающую природу самоощущения и понятие интерпассивности.',w:['0°00′00′′','плакальщицы']},
+  {f:'Агата Гафарова',n:'Гафарова',c:'Москва · инсталляция',b:'Работает с многоуровневыми инсталляциями, обращаясь к детским воспоминаниям, превращая это ощущение в физический опыт неустойчивости и поиска равновесия.',w:['держу себя в руках','из ниоткуда','разбирая на слои','сумбур создания порядка']},
+  {f:'Лина Борисова',n:'Борисова',c:'Москва · инсталляция',b:'Исследует визуальную фиксацию отношений между поверхностью и светом, демонстрирующих вариативность взаимодействия этих онтологических категорий.',w:['Как ухаживать за поверхностью с помощью света (серия)']},
+  {f:'Маргарита Варакина',n:'Варакина',c:'Москва · инсталляция',b:'В своих проектах исследует паттерны поведения и идентификации человека в общественных пространствах. В работе с 3D-графикой исследовала новую агентность, рожденную из наслоений текстур толпы, размышляя о понятии множества.',w:['привносим изменения']},
+  {f:'Жанна Куланова',n:'Куланова',c:'Москва · фотография',b:'Автора интересует исследование памяти как неустойчивого и ненадёжного визуального опыта, в котором граница между «было» и «не было» оказывается размыта.',w:['Это было, но я не уверена'],ser:true},
+  {f:'Патлис Петр',n:'Патлис',c:'Москва · фотография',b:'Основная тема работ связана с отдалением человека от природы и от своего прошлого. Люди постоянно находятся в непрекращающемся потоке информации, технологий и дел, из-за которых теряется простое состояние присутствия.',w:['парки района Щукино'],ser:true},
+  {f:'Варвара Панюшкина',n:'Панюшкина',c:'Москва · инсталляция',b:'Художница разных дисциплин, большой пласт своей практики посвятившая живописи и графике. В её работах часто звучит соластальгия — форма психологического стресса или экзистенциального беспокойства, возникающего из-за эмоционального или реального разрыва между человеком и его изменяющейся или ухудшающейся средой обитания.',w:['Сердцевина']},
+  {f:'Evgeniy Averin',n:'Averin',c:'Москва · фотография',b:'Работает в таких практиках, как живопись с элементами ассамбляжа, коллажи, объекты, видео и элементы стрит-арта. Большое влияние на творческую практику художника оказывает его бэкграунд в области материаловедения и опыт инженерно-технического работника по испытаниям сталей в лаборатории на металлургическом производстве.',w:['В количестве трёх, в количестве более трёх']},
+  {f:'Никита Нерих',n:'Нерих',c:'Москва · Mixed Media',b:'Исследует хранение как форму ожидания. Через превращение бытового предмета в объект наблюдения автор обращается к моменту, когда знакомое перестаёт быть понятным.',w:['На случай гостей']}
+  ];
+  A.forEach(function(a){
+    a.b=cap(noWidow(a.b));
+    a.c=capMed(a.c);
+    if(!a.ser && a.w.length>1){
+      a.w.sort(function(x,y){return x.toLowerCase().localeCompare(y.toLowerCase(),'ru')});
+    }
+  });
+  var WK=[];A.forEach(function(a,i){a.w.forEach(function(t){WK.push({id:WK.length,t:t,a:i})})});
+  var mkev=function(t,n,k,p,reg,x){return{t:t,n:noWidow(n),k:noWidow(k),p:noWidow(p),reg:!!reg,x:cap(noWidow(x))}};
+  var D=[
+  {d:'18.03.27',e:[mkev('19:00','Вернисаж','Открытие','Главный зал Мануфактура 10|12',0,'Открытие выставки «Terra Liminis». На вернисаже можно пройти зал вместе со всеми, услышать первое слово куратора и задать вопросы авторам. Вход свободный.'),
+   mkev('20:30','Лекция куратора','Лекция','Зал 2 Мануфактура 10|12',1,'Куратор выставки рассказывает, почему изменчивость стала центральной темой и как она объединяет разные медиа: видео, звук, инсталляцию, графику. Вход по предварительной регистрации.')]},
+  {d:'19.03.27',e:[mkev('15:00','Мастер-класс','Мастер-класс','«Пространство А», Дивенская улица, 2/13',1,'Практическая работа с цианотипией. Материалы выдаются, группа ограничена. Вход по предварительной регистрации.'),
+   mkev('18:00','Лекция','Лекция','«Доктрина эт Нобилес», Шведский пер. 2',1,'Поговорим о том, как плёнка, видеосигнал, цифровой шум и сам формат хранения влияют на то, что мы помним. Вход по предварительной регистрации.')]},
+  {d:'20.03.27',e:[mkev('16:00','Кураторская медиация','Медиация','Главный зал Мануфактура 10|12',1,'Медиация по выставочному залу, обсуждение работ и экспозиции. Вход по предварительной регистрации.')]},
+  {d:'21.03.27',e:[mkev('15:00','Мастер-класс','Мастер-класс','«Пространство А», Дивенская улица, 2/13',1,'Знакомство с TouchDesigner: создаём простой интерактивный визуал, который реагирует на звук или движение. Ноутбук обязателен. Вход по предварительной регистрации.'),
+   mkev('21:00 — 22:30','Вечер звука','Вечер звука','Арт-Центр «Пушкинская-10», Лиговский пр. 53',1,'Живые выступления: длинные, меняющиеся сеты без чётких границ между треками. Вход по предварительной регистрации.')]},
+  {d:'22.03.27',e:[mkev('17:00','Финисаж','Закрытие','Главный зал Мануфактура 10|12',0,'Закрытие выставки и последний день работ. Итоговая встреча с авторами и куратором. Вход свободный.')]}
+  ];
+
+  var WORK_INFO = {
+    'ванькины игрушки': {year:'2012–2018', tech:'Желатиносеребряная фотопечать, оптическая печать с увеличителя', size:'30 × 40 см (каждый отпечаток)', desc:'Серия строится на съёмке детских игрушек при драматическом, почти театральном свете. Свет становится главным объектом, превращая бытовые предметы в скульптурные образы.'},
+    'отблеск': {year:'2026', tech:'Гравюра на отражающей стали', size:'40 × 30 см', desc:'Гравюра на зеркальной поверхности включает зрителя в отражение, изображение невозможно зафиксировать, оно меняется в зависимости от положения смотрящего.'},
+    'удар': {year:'2026', tech:'Объект / гравюра на металле', size:'45 × 35 см', desc:'Работа о моменте физического, эмоционального и изобразительного столкновения. Материал фиксирует след удара и превращает его в самостоятельную форму.'},
+    'ласточка': {year:'2026', tech:'Линогравюра на пильном диске, тираж 4', size:'20 см (диаметр диска)', desc:'Художница превращает инструмент труда — пильный диск — в носитель изображения. Ласточка на металле одновременно хрупкая и хищная.'},
+    'ожог': {year:'2025', tech:'Средневековые сюжеты по памяти на использованной коже', size:'50 × 40 см', desc:'Воспроизведение религиозных сюжетов по памяти на обожжённой коже. Материал хранит следы огня, а изображение возникает как жест памяти.'},
+    'споры шума': {year:'2025', tech:'Сайт-специфик звуковая инсталляция', size:'60 × 40 × 70 см', desc:'Звуковые объекты прорастают из архитектуры и создают речеподобный шум. Художница использует эффект Ломбарда — непроизвольное изменение голоса в шумной среде.'},
+    'пазл': {year:'2023', tech:'Объект / инсталляция', size:'60 × 60 × 15 см', desc:'Работа продолжает тему фрагментации и сборки смысла. Пазл как форма — это одновременно целое и сумма частей.'},
+    'время цвести (серия)': {year:'2024–2025', tech:'Генеративная графика', size:'4K / 8K цифровые файлы; принты 70 × 100 см', desc:'В работах время существует нелогично: умирание и рождение, расцветание и закрытие бутона происходят одномоментно.'},
+    'на перекрестке а (серия)': {year:'2024–2026', tech:'Фотография, фотокнига', size:'30 × 45 см', desc:'Работа отсылает к акту чтения как хрупкому действию. Серия строится вокруг исчезающих воспоминаний, выцветающих надписей и памяти, которая ускользает вместе со временем.'},
+    'stars. first test.': {year:'2023–2026', tech:'Mixed media', size:'70 × 90 см', desc:'Работа о первом тесте — моменте, когда система ещё не знает, сработает ли она. Проба, зафиксированная как самостоятельное произведение.'},
+    'borisov-musatov tombstone.': {year:'2023–2026', tech:'Mixed media', size:'60 × 80 см', desc:'Работа обращается к надгробию Борисова-Мусатова — художника, чья жизнь и смерть стали частью русского символизма.'},
+    'my own hand of mysteries': {year:'2023–2026', tech:'Mixed media', size:'90 × 90 см', desc:'Автор работает с графикой, видеоартом и саунд-дизайном, превращая технику в акт присутствия.'},
+    '0°00′00′′': {year:'2024–2026', tech:'Фотография, инсталляция', size:'40 × 60 см', desc:'Нулевая координата — точка отсчёта, которая одновременно является и началом, и пустотой.'},
+    'плакальщицы': {year:'2024–2026', tech:'Mixed media', size:'40 × 60 см ', desc:'Обращение к традиции оплакивания — ритуалу, в котором горе становится коллективным действием.'},
+    'из ниоткуда': {year:'2023–2026', tech:'Инсталляция', size:'70 × 90 см', desc:'Работа о появлении формы из пустоты: предмет возникает без очевидного источника.'},
+    'разбирая на слои': {year:'2023–2026', tech:'Инсталляция', size:'80 × 120 см', desc:'Разборка как терапевтический жест: художница буквально разбирает объекты на слои, показывая, что целое всегда скрывает структуру.'},
+    'держу себя в руках': {year:'2023–2026', tech:'Объект, инсталляция', size:'40 × 30 × 30 см', desc:'Жест удержания как способ справиться с неустойчивостью. Название одновременно описывает физическое действие и эмоциональное состояние.'},
+    'сумбур создания порядка': {year:'2023–2026', tech:'Инсталляция', size:'12 × 20 × 90 см', desc:'Работа о парадоксе наведения порядка: чтобы создать структуру, нужно сначала создать хаос.'},
+    'как ухаживать за поверхностью с помощью света': {year:'2026', tech:'Объект, инсталляция', size:'20 × 28 см', desc:'Исследование материальности фотографии: как изображение перестаёт быть плоским и становится физическим объектом.'},
+    'привносим изменения': {year:'2021–2026', tech:'3D-графика, живопись, инсталляция', size:'60 × 90 см', desc:'Как отдельный жест или объект меняет конфигурацию целого.'},
+    'это было, но я не уверена': {year:'2024–2026', tech:'Фотография', size:'30 × 40 см', desc:'Название фиксирует состояние памяти, в котором граница между «было» и «не было» размыта.'},
+    'парки района щукино': {year:'2023–2026', tech:'Фотография', size:'40 × 60 см', desc:'Серия посвящена паркам района Щукино в Москве. За внешней документальностью скрывается тема отдаления человека от природы.'},
+    'сердцевина': {year:'2024–2026', tech:'Инсталляция', size:'Переменные', desc:'Работа о внутреннем ядре, которое остаётся после утраты внешних оболочек. Соластальгия — тоска по среде, которая изменилась, — становится эмоциональным фоном.'},
+    'в количестве трёх, в количестве более трёх': {year:'2025', tech:'Фотография', size:'40 × 60 см', desc:'Название отсылает к принципу минимум трёх итераций испытаний — к инженерной логике, которая переносится в искусство.'},
+    'на случай гостей': {year:'2024–2026', tech:'Mixed media', size:'50 × 40 × 30 см // 60 × 30 × 10 см', desc:'Работа исследует хранение как форму ожидания. Бытовой предмет становится объектом наблюдения, и в этом смещении привычное перестаёт быть понятным.'}
+  };
+
+  var IMG = {
+    'ванькины игрушки 1': 'https://ik.imagekit.io/pusaw0w7t/%D0%92%D0%B0%D0%BD%D1%8C%D0%BA%D0%B8%D0%BD%D1%8B%20%D0%B8%D0%B3%D1%80%D1%83%D1%88%D0%BA%D0%B8-2.jpg?updatedAt=1793194102141',
+    'ванькины игрушки 2': 'https://ik.imagekit.io/pusaw0w7t/%D0%92%D0%B0%D0%BD%D1%8C%D0%BA%D0%B8%D0%BD%D1%8B%20%D0%B8%D0%B3%D1%80%D1%83%D1%88%D0%BA%D0%B8-3.jpg?updatedAt=1793194104858',
+    'ванькины игрушки 3': 'https://ik.imagekit.io/pusaw0w7t/%D0%92%D0%B0%D0%BD%D1%8C%D0%BA%D0%B8%D0%BD%D1%8B%20%D0%B8%D0%B3%D1%80%D1%83%D1%88%D0%BA%D0%B8-6.jpg?updatedAt=1793194115534',
+    'ванькины игрушки 4': 'https://ik.imagekit.io/pusaw0w7t/%D0%92%D0%B0%D0%BD%D1%8C%D0%BA%D0%B8%D0%BD%D1%8B%20%D0%B8%D0%B3%D1%80%D1%83%D1%88%D0%BA%D0%B8-1.jpg?updatedAt=1793194114595',
+    'ванькины игрушки 5': 'https://ik.imagekit.io/pusaw0w7t/%D0%92%D0%B0%D0%BD%D1%8C%D0%BA%D0%B8%D0%BD%D1%8B%20%D0%B8%D0%B3%D1%80%D1%83%D1%88%D0%BA%D0%B8-4.jpg?updatedAt=1793194103687',
+    'отблеск': 'https://ik.imagekit.io/pusaw0w7t/%D0%9E%D0%A2%D0%91%D0%9B%D0%95%D0%A1%D0%9A.jpg?updatedAt=1793194098865',
+    'удар': 'https://ik.imagekit.io/pusaw0w7t/%D0%A3%D0%B4%D0%B0%D1%80-1.jpg?updatedAt=1793194078142',
+    'ласточка': 'https://ik.imagekit.io/pusaw0w7t/%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B0-3.jpg?updatedAt=1793194098971',
+    'ожог': 'https://ik.imagekit.io/pusaw0w7t/%D0%9E%D0%96%D0%9E%D0%93-3.jpg?updatedAt=1793194107971',
+    'споры шума': 'https://ik.imagekit.io/pusaw0w7t/%D0%A1%D0%BF%D0%BE%D1%80%D1%8B%20%D1%88%D1%83%D0%BC%D0%B0.jpg?updatedAt=1793194095242',
+    'пазл': 'https://ik.imagekit.io/pusaw0w7t/%D0%BF%D0%B0%D0%B7%D0%BB%D1%8B-3.jpg?updatedAt=1793194092919',
+    'время цвести (серия)': [
+      'https://ik.imagekit.io/pusaw0w7t/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F%20%D1%86%D0%B2%D0%B5%D1%81%D1%82%D0%B8%20-2.webp?updatedAt=1793194101321',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F%20%D1%86%D0%B2%D0%B5%D1%81%D1%82%D0%B8%20-1.webp?updatedAt=1793194106437',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F%20%D1%86%D0%B2%D0%B5%D1%81%D1%82%D0%B8%20-3.webp?updatedAt=1793194093682'
+    ],
+    'на перекрестке а (серия)': [
+      'https://ik.imagekit.io/pusaw0w7t/%D0%AF%20%D0%B1%D1%83%D0%B4%D1%83%20%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C,%20%D0%BF%D0%BE%D0%BA%D0%B0%20%D0%B2%D0%B8%D0%B4%D0%BD%D1%8B%20%D0%B1%D1%83%D0%BA%D0%B2%D1%8B-2.jpg?updatedAt=1793194077965',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%AF%20%D0%B1%D1%83%D0%B4%D1%83%20%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C,%20%D0%BF%D0%BE%D0%BA%D0%B0%20%D0%B2%D0%B8%D0%B4%D0%BD%D1%8B%20%D0%B1%D1%83%D0%BA%D0%B2%D1%8B-1.jpg?updatedAt=1793194084782'
+    ],
+    'stars. first test.': 'https://ik.imagekit.io/pusaw0w7t/photo_2026-10-28%2016.28.19.jpeg?updatedAt=1793194136538',
+    'borisov-musatov tombstone.': 'https://ik.imagekit.io/pusaw0w7t/photo_2026-10-28%2016.28.21.jpeg?updatedAt=1793194136984',
+    'my own hand of mysteries': 'https://ik.imagekit.io/pusaw0w7t/photo_2026-10-28%2016.28.37.jpeg?updatedAt=1793194137085',
+    '0°00′00′′': 'https://ik.imagekit.io/pusaw0w7t/0000.jpg?updatedAt=1793194088933',
+    'плакальщицы': 'https://ik.imagekit.io/pusaw0w7t/%D0%BF%D0%BB%D0%B0%D0%BA%D0%B0%D0%BB%D1%8C%D1%89%D0%B8%D1%86%D1%8B.png?updatedAt=1793194117318',
+    'из ниоткуда': 'https://ik.imagekit.io/pusaw0w7t/%D0%B8%D0%B7%20%D0%BD%D0%B8%D0%BE%D1%82%D0%BA%D1%83%D0%B4%D0%B0%202.jpg?updatedAt=1793194096915',
+    'разбирая на слои': 'https://ik.imagekit.io/pusaw0w7t/%D1%80%D0%B0%D0%B7%D0%B1%D0%B8%D1%80%D0%B0%D1%8F%20%D0%BD%D0%B0%20%D1%81%D0%BB%D0%BE%D0%B8%20-%202.jpg?updatedAt=1793194086936',
+    'держу себя в руках': 'https://ik.imagekit.io/pusaw0w7t/%D0%94%D0%B5%D1%80%D0%B6%D1%83%20%D1%81%D0%B5%D0%B1%D1%8F%20%D0%B2%20%D1%80%D1%83%D0%BA%D0%B0%D1%85.jpg?updatedAt=1793194115440',
+    'сумбур создания порядка': 'https://ik.imagekit.io/pusaw0w7t/%D1%81%D1%83%D0%BC%D0%B1%D1%83%D1%80%20%D0%BF%D0%BE%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%BF%D0%BE%D1%80%D1%8F%D0%B4%D0%BA%D0%B0.jpg?updatedAt=1793194084171',
+    'как ухаживать за поверхностью с помощью света': 'https://ik.imagekit.io/pusaw0w7t/%D0%9A%D0%B0%D0%BA%20%D1%83%D1%85%D0%B0%D0%B6%D0%B8%D0%B2%D0%B0%D1%82%D1%8C%20%D0%B7%D0%B0%20%D0%BF%D0%BE%D0%B2%D0%B5%D1%80%D1%85%D0%BD%D0%BE%D1%81%D1%82%D1%8C%D1%8E%20%D1%81%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E%20%D1%81%D0%B2%D0%B5%D1%82%D0%B0-3.png?updatedAt=1793194114478',
+    'привносим изменения': 'https://ik.imagekit.io/pusaw0w7t/%D0%BF%D1%80%D0%B8%D0%B2%D0%BD%D0%BE%D1%81%D0%B8%D0%BC%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%20-2.jpg?updatedAt=1793194098885',
+    'это было, но я не уверена': [
+      'https://ik.imagekit.io/pusaw0w7t/%D0%AD%D1%82%D0%BE%20%D0%B1%D1%8B%D0%BB%D0%BE,%20%D0%BD%D0%BE%20%D1%8F%20%D0%BD%D0%B5%20%D1%83%D0%B2%D0%B5%D1%80%D0%B5%D0%BD%D0%B0-4.jpg?updatedAt=1793194088949',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%AD%D1%82%D0%BE%20%D0%B1%D1%8B%D0%BB%D0%BE,%20%D0%BD%D0%BE%20%D1%8F%20%D0%BD%D0%B5%20%D1%83%D0%B2%D0%B5%D1%80%D0%B5%D0%BD%D0%B0-2.jpg?updatedAt=1793194095355',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%AD%D1%82%D0%BE%20%D0%B1%D1%8B%D0%BB%D0%BE,%20%D0%BD%D0%BE%20%D1%8F%20%D0%BD%D0%B5%20%D1%83%D0%B2%D0%B5%D1%80%D0%B5%D0%BD%D0%B0-1.jpg?updatedAt=1793194084338',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%AD%D1%82%D0%BE%20%D0%B1%D1%8B%D0%BB%D0%BE,%20%D0%BD%D0%BE%20%D1%8F%20%D0%BD%D0%B5%20%D1%83%D0%B2%D0%B5%D1%80%D0%B5%D0%BD%D0%B0-3.jpg?updatedAt=1793194095214'
+    ],
+    'парки района щукино': [
+      'https://ik.imagekit.io/pusaw0w7t/%D0%BF%D0%B0%D1%80%D0%BA%D0%B8%20%D1%80%D0%B0%D0%B8%CC%86%D0%BE%D0%BD%D0%B0%20%D0%A9%D1%83%D0%BA%D0%B8%D0%BD%D0%BE-3.jpg?updatedAt=1793194113984',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%BF%D0%B0%D1%80%D0%BA%D0%B8%20%D1%80%D0%B0%D0%B8%CC%86%D0%BE%D0%BD%D0%B0%20%D0%A9%D1%83%D0%BA%D0%B8%D0%BD%D0%BE-2.jpg?updatedAt=1793194113107',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%BF%D0%B0%D1%80%D0%BA%D0%B8%20%D1%80%D0%B0%D0%B8%CC%86%D0%BE%D0%BD%D0%B0%20%D0%A9%D1%83%D0%BA%D0%B8%D0%BD%D0%BE-1.jpg?updatedAt=1793194113422'
+    ],
+    'сердцевина': 'https://ik.imagekit.io/pusaw0w7t/%D0%A1%D0%B5%D1%80%D0%B4%D1%86%D0%B5%D0%B2%D0%B8%D0%BD%D0%B0-2.jpg?updatedAt=1793194100123',
+    'в количестве трёх, в количестве более трёх': 'https://ik.imagekit.io/pusaw0w7t/%D0%92%20%D0%BA%D0%BE%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5%20%D1%82%D1%80%D0%B5%CC%88%D1%85%20:%20%D0%92%20%D0%BA%D0%BE%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5%20%D0%B1%D0%BE%D0%BB%D0%B5%D0%B5%20%D1%82%D1%80%D0%B5%CC%88%D1%85.jpg?updatedAt=1793194082445',
+    'на случай гостей': 'https://ik.imagekit.io/pusaw0w7t/%D0%9D%D0%B0%20%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B8%CC%86%20%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B8%CC%86.jpg?updatedAt=1793194100652'
+  };
+
+  var IMG_HOME = {
+    'ванькины игрушки 1': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/New%20Folder/sabatier-effect%20(12).jpg',
+    'ванькины игрушки 2': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/New%20Folder/sabatier-effect%20(16).jpg',
+    'ванькины игрушки 3': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/New%20Folder/sabatier-effect%20(15).jpg',
+    'ванькины игрушки 4': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/New%20Folder/sabatier-effect%20(17).jpg',
+    'ванькины игрушки 5': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/New%20Folder/sabatier-effect%20(12).jpg',
+    'удар': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(70).jpg?updatedAt=1793376448318',
+    'споры шума': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(65).jpg?updatedAt=1793376448346',
+    'пазл': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(47).jpg?updatedAt=1793376448352',
+    'stars. first test.': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(79).jpg?updatedAt=1793376448328',
+    'borisov-musatov tombstone.': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(80).jpg?updatedAt=1793376448313',
+    'my own hand of mysteries': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(81).jpg?updatedAt=1793376448294',
+    '0°00′00′′': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(7).jpg?updatedAt=1793376448379',
+    'из ниоткуда': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(25).jpg?updatedAt=1793376448403',
+    'разбирая на слои': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(60).jpg?updatedAt=1793376448382',
+    'держу себя в руках': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(3).jpg?updatedAt=1793376448398',
+    'сумбур создания порядка': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(67).jpg?updatedAt=1793376448324',
+    'привносим изменения': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(58).jpg?updatedAt=1793376448343',
+    'это было, но я не уверена': [
+      'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(73).jpg?updatedAt=1793376448315',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(72).jpg?updatedAt=1793376448299'
+    ],
+    'парки района щукино': [
+      'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(54).jpg?updatedAt=1793376448336',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(52).jpg?updatedAt=1793376448376',
+      'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(51).jpg?updatedAt=1793376448350'
+    ],
+    'сердцевина': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(62).jpg?updatedAt=1793376448355',
+    'на случай гостей': 'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%BE%D0%B9%20/sabatier-effect%20(36).jpg?updatedAt=1793376448371'
+  };
+
+  var STACK_URLS = [
+    'https://ik.imagekit.io/pusaw0w7t/%D0%B8%D0%B7%20%D0%BD%D0%B8%D0%BE%D1%82%D0%BA%D1%83%D0%B4%D0%B0%201.jpg?updatedAt=1793194079835',
+    'https://ik.imagekit.io/pusaw0w7t/%D0%BF%D0%B0%D1%80%D0%BA%D0%B8%20%D1%80%D0%B0%D0%B8%CC%86%D0%BE%D0%BD%D0%B0%20%D0%A9%D1%83%D0%BA%D0%B8%D0%BD%D0%BE-3.jpg?updatedAt=1793194113984',
+    'https://ik.imagekit.io/pusaw0w7t/%D1%80%D0%B0%D0%B7%D0%B1%D0%B8%D1%80%D0%B0%D1%8F%20%D0%BD%D0%B0%20%D1%81%D0%BB%D0%BE%D0%B8%20-%202.jpg?updatedAt=1793194086936',
+    'https://ik.imagekit.io/pusaw0w7t/%D0%9A%D0%B0%D0%BA%20%D1%83%D1%85%D0%B0%D0%B6%D0%B8%D0%B2%D0%B0%D1%82%D1%8C%20%D0%B7%D0%B0%20%D0%BF%D0%BE%D0%B2%D0%B5%D1%80%D1%85%D0%BD%D0%BE%D1%81%D1%82%D1%8C%D1%8E%20%D1%81%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E%20%D1%81%D0%B2%D0%B5%D1%82%D0%B0%20-1.jpg?updatedAt=1793194091259',
+    'https://ik.imagekit.io/pusaw0w7t/%D0%AD%D1%82%D0%BE%20%D0%B1%D1%8B%D0%BB%D0%BE,%20%D0%BD%D0%BE%20%D1%8F%20%D0%BD%D0%B5%20%D1%83%D0%B2%D0%B5%D1%80%D0%B5%D0%BD%D0%B0-4.jpg?updatedAt=1793194088949',
+    'https://ik.imagekit.io/pusaw0w7t/%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%20%D0%B2%D0%B5%D1%80%D1%82%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%20%D0%B3%D0%B8%D1%84/Frame%202131331154_XC7HeC1wv.png?updatedAt=1793380577706',
+    'https://ik.imagekit.io/pusaw0w7t/%D0%A3%D0%B4%D0%B0%D1%80-2.jpg?updatedAt=1793194080315',
+    'https://ik.imagekit.io/pusaw0w7t/%D0%AD%D1%82%D0%BE%20%D0%B1%D1%8B%D0%BB%D0%BE,%20%D0%BD%D0%BE%20%D1%8F%20%D0%BD%D0%B5%20%D1%83%D0%B2%D0%B5%D1%80%D0%B5%D0%BD%D0%B0-1.jpg?updatedAt=1793194084338',
+    'https://ik.imagekit.io/pusaw0w7t/%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%20%D0%B2%D0%B5%D1%80%D1%82%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%20%D0%B3%D0%B8%D1%84/Frame%202131331158.png?updatedAt=1793380639461'
+  ];
+
+  var C4_ITEMS = [
+    {au:0,  w:'ванькины игрушки',             url:'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%BA%D1%80%D0%BE%D0%BB%D0%BB/Frame%202131331161_xVPcFefpV.png'},
+    {au:1,  w:'отблеск',                      url:'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%BA%D1%80%D0%BE%D0%BB%D0%BB/Frame%202131331160.png'},
+    {au:2,  w:'споры шума',                   url:'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%BA%D1%80%D0%BE%D0%BB%D0%BB/Frame%202131331162.png'},
+    {au:12, w:'сердцевина',                   url:'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%BA%D1%80%D0%BE%D0%BB%D0%BB/Frame%202131331163.png'},
+    {au:5,  w:'my own hand of mysteries',   url:'https://ik.imagekit.io/pusaw0w7t/%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%20%D0%B2%D0%B5%D1%80%D1%82%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%20%D0%BE%D0%B1%D1%8B%D1%87%D0%BD%D1%8B%D0%B9/Frame%202131331153.png?updatedAt=1793394928419'},
+    {au:6,  w:'0°00′00′′',                    url:'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%BA%D1%80%D0%BE%D0%BB%D0%BB/Frame%202131331166.png'},
+    {au:10, w:'это было, но я не уверена',    url:'https://ik.imagekit.io/pusaw0w7t/%D0%B3%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%BA%D1%80%D0%BE%D0%BB%D0%BB/Frame%202131331164.png'}
+  ];
+
+var PB='https://ik.imagekit.io/pusaw0w7t/',FR='Frame%202131331';
+var PA=PB+'%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%20%D1%83%20%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2/';
+var PTV=PB+'%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%20%D0%B2%D0%B5%D1%80%D1%82%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%20%D0%B3%D0%B8%D1%84/';
+var PGF=PB+'%D0%B5%D1%89%D0%B5%20%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%20%D1%83%20%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%D0%BD%D0%B0%20%D0%B3%D0%B8%D1%84%D0%BA%D0%B8%20/';
+var PO=PB+'%D1%84%D0%BE%D1%82%D0%BA%D0%B8%20%D0%B2%20%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8E%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%20/';
+var BN='%D0%9A%D0%B0%D0%BA%20%D1%83%D1%85%D0%B0%D0%B6%D0%B8%D0%B2%D0%B0%D1%82%D1%8C%20%D0%B7%D0%B0%20%D0%BF%D0%BE%D0%B2%D0%B5%D1%80%D1%85%D0%BD%D0%BE%D1%81%D1%82%D1%8C%D1%8E%20%D1%81%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E%20%D1%81%D0%B2%D0%B5%D1%82%D0%B0';
+function fu(b,n){return b+FR+n+'.png'}
+var BK='как ухаживать за поверхностью с помощью света';
+WORK_INFO[BK+' (серия)']=WORK_INFO[BK];
+IMG[BK+' (серия)']=IMG[BK];
+var AF={'отблеск':[133],'время цвести (серия)':[135,134,136],'stars. first test.':[138],'borisov-musatov tombstone.':[139],'my own hand of mysteries':[140],'ванькины игрушки 1':[144],'ванькины игрушки 2':[142],'ванькины игрушки 3':[145],'ванькины игрушки 4':[141],'ванькины игрушки 5':[143],'из ниоткуда':[146]};
+var GF={'удар':[167,195],'ласточка':[196,169,197],'ожог':[199,201,198],'споры шума':[173,219,220,214],'пазл':[203,202,175],'на перекрестке а (серия)':[223,221,222],'плакальщицы':[181],'сумбур создания порядка':[224,225,207],
+ 'сердцевина':[189,210,213],'в количестве трёх, в количестве более трёх':[231,228,230,226,229],'на случай гостей':[193,212,234]};
+var VT={'удар':168,'ласточка':170,'ожог':172,'споры шума':174,'пазл':176,'на перекрестке а (серия)':178,'плакальщицы':182,'сумбур создания порядка':184,'как ухаживать за поверхностью с помощью света (серия)':186,'сердцевина':190,'в количестве трёх, в количестве более трёх':192,'на случай гостей':194,
+ 'отблеск':147,'время цвести (серия)':['148_p5zHblIQQ','149_BVMQQscq7',150],'stars. first test.':151,'borisov-musatov tombstone.':152,'my own hand of mysteries':153,'ванькины игрушки 1':'154_XC7HeC1wv','ванькины игрушки 2':'155_jVf9eYtIW','ванькины игрушки 3':156,'ванькины игрушки 4':157,'ванькины игрушки 5':158,'из ниоткуда':159};
+var URLS={};
+URLS[BK+' (серия)']=[PO+BN+'-3%201.png',PO+BN+'-2%201.png',PO+'image%20412.png'];
+function pk(m,t){var k=String(t||'').toLowerCase().trim();
+  if(m[k]!==undefined)return m[k];
+  if(m[k+' (серия)']!==undefined)return m[k+' (серия)'];
+  return m[k.replace(/\s*\(серия\)$/,'')]}
+function aList(t){var u=pk(URLS,t);if(u)return u.slice();
+  var g=pk(GF,t);if(g)return g.map(function(n){return fu(PGF,n)});
+  var a=pk(AF,t);if(a)return a.map(function(n){return fu(PA,n)});
+  return urlsFor(t,false)}
+function openList(t){return aList(t)}
+function tileImg(t,id){var v=pk(VT,t);if(v===undefined)return null;if(Array.isArray(v))v=v[id%v.length];return fu(PTV,v)}
+[GF,AF].forEach(function(m,mi){Object.keys(m).forEach(function(k){m[k].forEach(function(n){new Image().src=fu(mi?PA:PGF,n)})})});
+URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
+[GF,AF].forEach(function(m,mi){Object.keys(m).forEach(function(k){m[k].forEach(function(n){new Image().src=fu(mi?PA:PGF,n)})})});
+  function keyOf(title){ return String(title||'').toLowerCase().trim(); }
+  function urlsFor(title, home){
+    var src = home ? IMG_HOME : IMG;
+    var v2 = src[keyOf(title)];
+    if(!v2) return [];
+    return Array.isArray(v2) ? v2.slice() : [v2];
+  }
+  function imgFor(title, idx){
+    var v2 = IMG[keyOf(title)];
+    if(!v2) return null;
+    return Array.isArray(v2) ? v2[(idx||0)%v2.length] : v2;
+  }
+  function imgForHome(title, idx){
+    var v2 = IMG_HOME[keyOf(title)];
+    if(!v2) return null;
+    return Array.isArray(v2) ? v2[(idx||0)%v2.length] : v2;
+  }
+  function bgHtml(title, fallback, idx){
+    var img = imgFor(title, idx);
+    var s = 'background-color:'+fallback;
+    if(img){
+      s += ';background-image:url(&quot;'+img+'&quot;);background-size:cover;background-position:center;background-repeat:no-repeat';
+    }
+    return s;
+  }
+  function bgHtmlUrl(url, fallback){
+    var s = 'background-color:'+fallback;
+    if(url){
+      s += ';background-image:url(&quot;'+url+'&quot;);background-size:cover;background-position:center;background-repeat:no-repeat';
+    }
+    return s;
+  }
+
+  var HOME_POOL = [];
+  WK.forEach(function(w,i){ if(IMG_HOME[keyOf(w.t)]) HOME_POOL.push(i); });
+
+  var _ready = {};
+  var _readyCount = 0, _totalCount = 0;
+  var _homeReadyCount = 0, _homeTotalCount = 0;
+  function preload(url, isHome){
+    if(_ready[url]!==undefined){ if(isHome){_homeTotalCount++; if(_ready[url]!==false)_homeReadyCount++;} return; }
+    _totalCount++; if(isHome)_homeTotalCount++;
+    _ready[url] = false;
+    var im = new Image();
+    im.onload = function(){ _ready[url] = true; _readyCount++; if(isHome)_homeReadyCount++; };
+    im.onerror = function(){ _ready[url] = 'error'; _readyCount++; if(isHome)_homeReadyCount++; };
+    im.src = url;
+  }
+  Object.keys(IMG_HOME).forEach(function(k){
+    var v2 = IMG_HOME[k];
+    (Array.isArray(v2) ? v2 : [v2]).forEach(function(u){ preload(u, true) });
+  });
+  Object.keys(IMG).forEach(function(k){
+    var v2 = IMG[k];
+    (Array.isArray(v2) ? v2 : [v2]).forEach(function(u){ preload(u, false) });
+  });
+
+  var v='home',mode='auth',ai=0,wi=0,di=0,busy=0,full=0,hoverPaused=false,evOpen=0,lastSw=0,cw=0,lrInit=0,authSeriesIdx=0,gridFilter=-1;
+  var cx = window.innerWidth/2, cy = window.innerHeight/2, tx=cx, ty=cy, last=0, _plx=null, _ply=null;
+  var st=$('#stage'),menu=$('#menu');
+  st.style.setProperty('--x',cx+'px'); st.style.setProperty('--y',cy+'px');
+  var GBASE=14,gapCur=GBASE,gapTgt=GBASE,gapK=0.15;
+  function bigGap(){return Math.max(window.innerWidth,window.innerHeight)*1.7}
+  var MQN=matchMedia('(max-width:880px)'),MQT=matchMedia('(pointer:coarse)'),NR=false,TCH=false;
+  function setMode(){NR=MQN.matches;TCH=MQT.matches;gapK=NR?.10:.15;app.classList.toggle('narrow',NR);app.classList.toggle('touch',TCH)}
+  function onMode(){
+    setMode();
+    applyLens();
+    updateMenuLabels();
+    if(NR && v==='prog'){ v='prog-page'; app.setAttribute('data-v','prog-page'); showPages('prog-page'); }
+    else if(!NR && v==='prog-page'){ v='prog'; app.setAttribute('data-v','prog'); showPages('prog'); paint(); }
+    if(v==='auth')paint();
+    lmeasure();
+    updateBgFit();
+  }
+  setMode();
+  [MQN,MQT].forEach(function(m){if(m.addEventListener)m.addEventListener('change',onMode);else if(m.addListener)m.addListener(onMode)});
+
+  var imgDimCache = {};
+  var _bgiUrl = '';
+  function updateBgFit(){
+    if(v!=='auth') return;
+    if(!_bgiUrl){
+      st.style.setProperty('--imgw','auto');
+      st.style.setProperty('--imgh','auto');
+      st.style.setProperty('--imgox','0px');
+      st.style.setProperty('--imgoy','0px');
+      return;
+    }
+    var stageW = st.offsetWidth, stageH = st.offsetHeight;
+    if(!stageW||!stageH) return;
+    if(imgDimCache[_bgiUrl]){ apply(); return; }
+    var img=new Image();
+    img.onload=function(){
+      imgDimCache[_bgiUrl]={w:img.naturalWidth,h:img.naturalHeight};
+      apply();
+    };
+    img.src = _bgiUrl;
+    function apply(){
+      var d = imgDimCache[_bgiUrl];
+      var scale = Math.max(stageW/d.w, stageH/d.h);
+      var cw2 = d.w*scale, ch = d.h*scale;
+      var ox = (stageW-cw2)/2, oy = (stageH-ch)/2;
+      st.style.setProperty('--imgw', cw2.toFixed(1)+'px');
+      st.style.setProperty('--imgh', ch.toFixed(1)+'px');
+      st.style.setProperty('--imgox', ox.toFixed(1)+'px');
+      st.style.setProperty('--imgoy', oy.toFixed(1)+'px');
+    }
+  }
+
+  (function(){
+    var pl=$('#progList'); if(!pl)return;
+    pl.innerHTML = D.map(function(day){
+      return '<div class="prog-day"><div class="prog-day-date">'+day.d+'</div>'+
+        day.e.map(function(e){
+          return '<div class="prog-item"><div class="prog-head"><b>'+e.n+'</b><span>'+e.t+' · '+e.p+'</span></div><div class="prog-body"><p>'+e.x+'</p>'+(e.reg?'<button class="reg-btn">Регистрация</button>':'')+'</div></div>'
+        }).join('')+'</div>';
+    }).join('');
+    pl.addEventListener('click',function(e){
+      if(e.target.classList.contains('reg-btn')){e.stopPropagation();alert('Регистрация отправлена!');return}
+      var head=e.target.closest('.prog-head'); if(head)head.closest('.prog-item').classList.toggle('on');
+    });
+  })();
+
+  ['f0','f1','f2','f3'].forEach(function(id){st.insertAdjacentHTML('afterbegin','<div class="f" id="'+id+'"><span class="lab"></span><div class="ev"></div></div>')});
+  var F=[0,1,2,3].map(function(i){return $('#f'+i)});
+  var tone=function(i){return 'hsl(0 0% '+(26+(i*37)%46)+'%)'};
+  var lab=function(q,t){F[q].querySelector('.lab').textContent=t};
+  var wk=function(){return WK.filter(function(x){return x.a===ai})};
+
+  var _curIdx=[-1,-1,-1,-1];
+  function setF(q,i){
+    var home=(v==='home');
+    var others={};
+    for(var oi=0;oi<4;oi++){ if(oi!==q && _curIdx[oi]>=0) others[_curIdx[oi]]=1 }
+    function readyUrl(j){
+      var list=urlsFor(WK[j].t, home).filter(function(u){return _ready[u]===true});
+      if(!list.length) return null;
+      return list[Math.random()*list.length|0];
+    }
+    var url=null;
+    if(!others[i] && (!home || HOME_POOL.indexOf(i)>=0)) url=readyUrl(i);
+    if(!url){
+      var pool;
+      if(home) pool=HOME_POOL;
+      else { pool=[]; for(var n=0;n<WK.length;n++)pool.push(n); }
+      if(!pool.length) return;
+      for(var tr=0;tr<60;tr++){
+        var j=pool[Math.random()*pool.length|0];
+        if(others[j]) continue;
+        var u2=readyUrl(j);
+        if(u2){ i=j; url=u2; break }
+      }
+    }
+    if(!url) return;
+    _curIdx[q]=i;
+    var w=WK[i];
+    F[q].style.backgroundColor=tone(i);
+    F[q].style.backgroundImage='url("'+url+'")';
+    F[q].style.backgroundSize='cover';
+    F[q].style.backgroundPosition='center';
+    F[q].style.backgroundRepeat='no-repeat';
+    lab(q,'IMG '+pad(i+1));
+    var c=$('#cap').children[q];
+    if(c) c.textContent='IMG '+pad(i+1)+' · '+A[w.a].f+' / '+w.t;
+  }
+
+  function swBar(items,on,nums){$('#sw').innerHTML=items.map(function(t,i){return '<span class="'+(i==on?'on':'')+'" data-i="'+i+'">'+(nums?(i+1):t)+'</span>'}).join('')}
+  function openEv(i){var x=D[di].e[i];if(!x)return;
+    var evp=$('#evp');
+    evp.innerHTML='<div class="pq"><div>'+x.t+' · '+x.p+'</div><h3>'+x.n+'</h3><p>'+x.x+'</p>'+(x.reg?'<button class="reg-btn">Регистрация</button>':'')+'</div>';
+    evp.classList.add('on');evOpen=1}
+  function closeEv(){var evp=$('#evp');evp.classList.remove('on');evOpen=0}
+  $('#evp').onclick=function(e){if(e.target.classList.contains('reg-btn')){alert('Регистрация отправлена!');return}
+    if(!e.target.closest('.pq'))closeEv()};
+  F.forEach(function(f,q){f.addEventListener('click',function(e){if(v!=='prog')return;
+    if(e.target.classList.contains('reg-btn')){alert('Регистрация отправлена!');return}
+    if(f.classList.contains('active'))openEv(q);
+    else{F.forEach(function(x){x.classList.remove('active')});f.classList.add('active')}})});
+
+  function setBio(x){var b=$('#bio'),on=(x===undefined)?!b.classList.contains('on'):!!x;b.classList.toggle('on',on);app.classList.toggle('bio',on)}
+
+  $('#g-auth').addEventListener('click',function(e){
+    if(v!=='auth') return;
+    if(e.target.closest('.bio-x')){ e.stopPropagation(); setBio(false); return; }
+    if(e.target.closest('.bio-works')) return;
+    if(e.target.closest('#vn span')) return;
+    if(e.target.closest('#bio')) return;
+    if(e.target.closest('#wt span')) return;
+    if(e.target.closest('#sw span')) return;
+    if(e.target.closest('#mode span')) return;
+    setBio(!app.classList.contains('bio'));
+  });
+(function(){
+  var m=$('#c6 .map');if(!m)return;
+  var LAT=59.9490,LON=30.3870,Z=16,n=Math.pow(2,Z),la=LAT*Math.PI/180;
+  var xt=(LON+180)/360*n, yt=(1-Math.log(Math.tan(la)+1/Math.cos(la))/Math.PI)/2*n;
+  var ix=Math.floor(xt)-1, iy=Math.floor(yt)-1, h='';
+  for(var r=0;r<3;r++)for(var c=0;c<3;c++)h+='<img alt="" src="https://basemaps.cartocdn.com/light_all/'+Z+'/'+(ix+c)+'/'+(iy+r)+'@2x.png">';
+  m.innerHTML='<div class="mt" style="left:calc(50% - '+((xt-ix)*256).toFixed(1)+'px);top:calc(50% - '+((yt-iy)*256).toFixed(1)+'px)">'+h+'</div><i class="pin"></i><span class="mc">© OpenStreetMap · CARTO</span>';
+})();
+      go('works', {keepFilter: true});
+    }
+  });
+
+  function paint(){
+    F.forEach(function(f){f.style.display='block';f.classList.remove('active')});
+    if(v==='auth'){
+      var a=A[ai], bgImg=null, bgTone='#999';
+      var bioBtn = '<button class="bio-works" type="button">Смотреть работы →</button>';
+      if(a.ser){
+        var sw=wk();
+        var cur = sw[authSeriesIdx % sw.length] || sw[0];
+        var label = a.w[0];
+        if(label.indexOf('(серия)') === -1) label += ' (серия)';
+        var L1=aList(cur.t); bgImg = L1.length ? L1[authSeriesIdx%L1.length] : null;
+        bgTone = tone(cur.id + (bgImg ? 0 : authSeriesIdx*7));
+        $('#vn span').textContent=a.f;
+        $('#wt').innerHTML='<span class="on" style="cursor:default">'+cap(noWidow(label))+'</span>';
+        $('#bio').innerHTML='<div class="bio-head"><span>ОБ АВТОРЕ</span><button class="bio-x" type="button" aria-label="Закрыть">×</button></div><div>'+a.c+'</div><p>'+a.b+'</p>'+bioBtn;
+        setBio(0);
+        swBar(A.map(function(x){return x.n}),ai,1);
+      } else {
+        var w = wk()[wi] || wk()[0];
+        var L2=aList(w.t); bgImg = L2.length ? L2[authSeriesIdx%L2.length] : null;
+        bgTone = tone(w.id);
+        $('#vn span').textContent=a.f;
+        $('#wt').innerHTML=wk().map(function(x,i){return '<span class="'+(i==wi?'on':'')+'" data-i="'+i+'">'+cap(x.t)+'</span>'}).join('');
+        $('#bio').innerHTML='<div class="bio-head"><span>ОБ АВТОРЕ</span><button class="bio-x" type="button" aria-label="Закрыть">×</button></div><div>'+a.c+'</div><p>'+a.b+'</p>'+bioBtn;
+        setBio(0);
+        swBar(A.map(function(x){return x.n}),ai,1);
+      }
+      _bgiUrl = bgImg || '';
+      st.style.setProperty('--bgi', bgImg ? 'url("'+bgImg+'")' : 'none');
+      st.style.setProperty('--bgc', bgTone);
+      F.forEach(function(f){f.style.background='';f.style.backgroundImage='';});
+      updateBgFit();
+    }
+    if(v==='prog'){
+      var e=D[di].e;
+      F.forEach(function(f,q){var x=e[q];f.style.display=(x&&q<2)?'block':'none';if(!x)return;
+        f.style.backgroundColor=tone(di*4+q+3);f.style.backgroundImage='';lab(q,x.t);
+        f.querySelector('.ev').innerHTML='<div class="m">'+x.t+' · '+x.p+'</div><h3>'+x.n+'</h3><p>'+x.x+'</p>'+(x.reg?'<button class="reg-btn">Регистрация</button>':'')});
+      $('#vd').textContent=D[di].d;
+      swBar(D.map(function(x){return x.d}),di,0)}
+  }
+  $('#wt').addEventListener('mouseenter',function(){if(!TCH)hoverPaused=true});
+  $('#wt').addEventListener('mouseleave',function(){hoverPaused=false});
+  var mt;menu.addEventListener('mouseenter',function(){clearTimeout(mt)});
+  menu.addEventListener('mouseleave',function(){mt=setTimeout(function(){menu.classList.remove('open')},400)});
+  function closeMenu(){menu.classList.remove('open')}
+  function quick(fn){closeEv();lastSw=Date.now();F.forEach(function(f){f.style.opacity=.12});
+    setTimeout(function(){fn();paint();F.forEach(function(f){f.style.opacity=1})},170)}
+  function breathe(fn){closeEv();gapTgt=46;
+    setTimeout(function(){fn();paint();gapTgt=full?0:GBASE},230)}
+  function mark(){
+    $$('#ml li[data-k]').forEach(function(li){
+      var k=li.getAttribute('data-k');
+      li.classList.toggle('on', k===v || (v==='prog-page' && k==='prog') || (k==='auth' && (v==='auth' || v==='works')));
+    });
+    $$('#mode span').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-m')===v)});
+  }
+  function showPages(name){ $$('.page').forEach(function(p){p.classList.toggle('on', p.id==='p-'+name)}); }
+  var PG=['about','works','contacts','prog-page'];
+  var aboutScrollU=null;
+
+  var MENU=[
+    {k:'about', n:'❶', t:'О выставке', tm:null},
+    {k:'auth', n:'❷', t:'Авторы и работы', tm:'Работы'},
+    {k:'prog', n:'❸', t:'Программа', tm:null},
+    {k:'contacts', n:'❹', t:'Контакты', tm:null}
+  ];
+  function renderMenu(){
+    $('#ml').innerHTML = MENU.map(function(it){
+      var lbl = (NR && it.tm) ? it.tm : it.t;
+      return '<li data-k="'+it.k+'"><span class="n">'+it.n+'</span><span class="lbl">'+lbl+'</span></li>';
+    }).join('') + '<li id="hm">главная</li>';
+  }
+  function updateMenuLabels(){
+    MENU.forEach(function(it){
+      var span = $('#ml [data-k="'+it.k+'"] .lbl');
+      if(span) span.textContent = (NR && it.tm) ? it.tm : it.t;
+    });
+  }
+  renderMenu();
+
+  $('#ml').onclick=function(e){var li=e.target.closest('li');if(!li)return;closeMenu();
+    var k = li.id==='hm'?'home':li.getAttribute('data-k');
+    if(k==='auth'){ if(NR) k='works'; }
+    go(k)};
+  $('#menu b').onclick=function(e){e.stopPropagation();menu.classList.toggle('open')};
+  $('#mode').onclick=function(e){var m=e.target.getAttribute('data-m');if(m){mode=m;closeMenu();go(m)}};
+  $('#sw').onclick=function(e){var i=e.target.getAttribute('data-i');if(i==null)return;closeMenu();
+    authSeriesIdx=0;
+    if(v==='auth')quick(function(){ai=+i;wi=0});
+    else breathe(function(){di=+i})};
+  $('#wt').onclick=function(e){var i=e.target.getAttribute('data-i');if(i!=null){ e.stopPropagation(); quick(function(){wi=+i;authSeriesIdx=0}); }};
+
+  function fillHome(){
+    _curIdx=[-1,-1,-1,-1];
+    for(var q=0;q<4;q++) setF(q, HOME_POOL.length ? HOME_POOL[Math.random()*HOME_POOL.length|0] : 0);
+  }
+
+  function go(n, opts){
+    if(busy||n===v)return;busy=1;closeMenu();closeEv();setBio(0);full=0;
+    if(n==='works' && !(opts && opts.keepFilter)){
+      gridFilter = -1;
+      renderGrid();
+    }
+    if(NR && n==='auth') n='works';
+    var newV = (n==='prog' && NR) ? 'prog-page' : n;
+    var prevV = v;
+    var fromPg=PG.indexOf(v)>=0, toPg=PG.indexOf(newV)>=0;
+    if(newV!=='about')lrInit=0;
+    var delay = fromPg ? 300 : 760;
+    if(!fromPg){gapTgt=bigGap()}
+    app.classList.add('swal');
+    setTimeout(function(){
+      v=newV;app.setAttribute('data-v',newV);
+      showPages(newV);
+      if(newV==='about'){
+        lrInit=0;
+        requestAnimationFrame(function(){
+          lmeasure();
+          if(aboutScrollU!==null){AB.scrollTop=LOOP*lh+aboutScrollU*lh;aboutScrollU=null}
+          else AB.scrollTop=LOOP*lh;
+          axx=lw/2;axy=lh/2;axg=0;axo=0;axc=0;axs=1;us=null;hrS=1;lvSide=1;lvF=1;
+          introStart=performance.now()+1e7;lrender(true);
+          requestAnimationFrame(function(){lmeasure();introStart=performance.now()+120;lrender(true);lrInit=1});
+        })}
+      if(!toPg){gapCur=bigGap();gapTgt=GBASE;paint()}
+      if(prevV==='auth' && newV!=='auth'){ _bgiUrl=''; }
+      if(newV==='home'){ fillHome(); }
+      app.classList.remove('swal');
+      mark();busy=0
+    },delay)
+  }
+  function openAuthor(i){ai=i;wi=0;mode='auth';go('auth')}
+
+  function renderGrid(){
+    var items = [];
+    WK.forEach(function(w, i){
+      if(gridFilter >= 0 && w.a !== gridFilter) return;
+var tu=tileImg(w.t,w.id);
+items.push('<div class="it" data-i="'+i+'">'+(tu?'<img class="ph" src="'+tu+'" alt="" loading="lazy">':'<div class="ph" style="'+bgHtml(w.t, tone(i), w.id)+'"></div>')+'<p>IMG '+pad(i+1)+' · '+w.t+'<br>'+A[w.a].f+'</p></div>');    });
+    var head = '';
+    if(gridFilter >= 0){
+      head = '<div class="grid-head"><a href="#" data-reset>← Все работы</a>'+(NR?'':'<a href="#" data-back>← К автору</a>')+'<span>'+A[gridFilter].f+'</span></div>';
+    }
+    $('#grid').innerHTML = head + items.join('');
+  }
+  renderGrid();
+  (function(){
+  var pl=PB+'%D0%BB%D0%BE%D0%B3%D0%BE%20%D0%BF%D0%B0%D1%80%D1%82%D0%BD%D0%B5%D1%80%D0%BE%D0%B2/';
+  var P=['School-logo-RU-M-2line-for_light-rgb.png','DN_LOGO%20(1)%201.png','soundmuseum-ru.png','logo-black.png','dotline_logo.png','%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-10-31%20%D0%B2%2000.44.24.png','photo_2026-10-31%2000.26.48.jpeg'];
+  $$('.lgb').forEach(function(a,i){if(P[i])a.innerHTML='<img src="'+pl+P[i]+'" alt="">'});
+  var q=$('.qr');if(q)q.innerHTML='<img src="'+PB+'qr-code%20(1).png" alt="QR">';
+  var fp=PB+'%D0%BB%D0%BE%D0%B3%D0%BE%20%D1%84%D1%83%D1%82%D0%B5%D1%80/';
+  var F2=['Group%202136140618.png','Group%202136140617.png','Manufacroty1012%C2%A0_%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F.jpg'];
+  $$('#bar .lg').forEach(function(s,i){if(F2[i])s.innerHTML='<img src="'+fp+F2[i]+'" alt="">'});
+})();
+(function(){
+  var m=$('#c6 .map');if(!m)return;
+  var LAT=59.9490,LON=30.3870,Z=16,n=Math.pow(2,Z),la=LAT*Math.PI/180;
+  var xt=(LON+180)/360*n, yt=(1-Math.log(Math.tan(la)+1/Math.cos(la))/Math.PI)/2*n;
+  var ix=Math.floor(xt)-1, iy=Math.floor(yt)-1;
+  var g=document.createElement('div');g.className='mt';
+  g.style.left='calc(50% - '+((xt-ix)*256).toFixed(1)+'px)';
+  g.style.top='calc(50% - '+((yt-iy)*256).toFixed(1)+'px)';
+  for(var r=0;r<3;r++)for(var c=0;c<3;c++){
+    var X=ix+c,Y=iy+r,im=new Image();im.alt='';
+    (function(im,ou){im.onerror=function(){im.onerror=null;im.src=ou}})(im,'https://tile.openstreetmap.org/'+Z+'/'+X+'/'+Y+'.png');
+    im.src='https://basemaps.cartocdn.com/light_all/'+Z+'/'+X+'/'+Y+'@2x.png';
+    g.appendChild(im);
+  }
+  m.innerHTML='';m.appendChild(g);
+  m.insertAdjacentHTML('beforeend','<i class="pin"></i><span class="mc">© OpenStreetMap · CARTO</span>');
+})();
+  $('#grid').addEventListener('click',function(e){
+    if(e.target.closest('[data-back]')){e.preventDefault();ai=gridFilter;wi=0;authSeriesIdx=0;mode='auth';go('auth');return}
+    if(e.target.closest('[data-reset]')){
+      e.preventDefault();
+      gridFilter = -1;
+      renderGrid();
+      return;
+    }
+    var it=e.target.closest('.it');
+    if(it)showWork(+it.getAttribute('data-i'));
+  });
+
+  var curL=[];
+function showWork(i){
+  cw=(i+WK.length)%WK.length;
+  var w=WK[cw];
+  var key=w.t.toLowerCase();
+  var info=WORK_INFO[key];
+  if(!info && key.indexOf('ванькины игрушки')===0) info=WORK_INFO['ванькины игрушки'];
+  if(!info) info={year:'2026', tech:'Техника уточняется', size:'Размеры уточняются', desc:'Описание готовится.'};
+  curL=openList(w.t);
+  var pic = curL.length
+    ? '<div class="pw"><img src="'+curL[0]+'" alt="">'+(curL.length>1?'<div class="work-dots">'+curL.map(function(_,k){return '<i data-k="'+k+'" class="'+(k?'':'on')+'"></i>'}).join('')+'</div>':'')+'</div>'
+    : '<div class="ph" style="'+bgHtml(w.t, tone(cw), w.id)+'"></div>';
+  $('#p-work').innerHTML=
+    '<button class="ar l" data-d="-1">←</button><button class="ar r" data-d="1">→</button>'+pic+
+    '<div><h3>'+w.t+'</h3><p>'+A[w.a].f+'</p><p>'+info.year+'<br>'+info.tech+'<br>'+info.size+'</p><p>'+info.desc+'</p></div>';
+  $('#p-work').classList.add('on')
+}
+app.insertAdjacentHTML('beforeend','<div id="lb"><img alt=""></div>');
+$('#lb').onclick=function(){this.classList.remove('on')};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')$('#lb').classList.remove('on')});
+$('#p-work').onclick=function(e){
+  if(e.target.matches('.pw img')){$('#lb img').src=e.target.src;$('#lb').classList.add('on');return}
+  var d=e.target.closest('.work-dots i');
+  if(d){var k=+d.getAttribute('data-k'),im=$('#p-work .pw img');if(im)im.src=curL[k];
+    $$('#p-work .work-dots i').forEach(function(x,n){x.classList.toggle('on',n===k)});return}
+  var b=e.target.closest('.ar');if(b){showWork(cw+ +b.getAttribute('data-d'));return}
+  if(!e.target.closest('.ph,.pw,h3,p'))$('#p-work').classList.remove('on')};
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){$('#p-work').classList.remove('on');setBio(0);F.forEach(function(f){f.classList.remove('active')});closeEv();closeMenu()}
+    if(v==='about'){
+      if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){e.preventDefault();AB.scrollTop+=lh*.85}
+      if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();AB.scrollTop-=lh*.85}
+      return}
+    if($('#p-work').classList.contains('on')){if(e.key==='ArrowRight')showWork(cw+1);if(e.key==='ArrowLeft')showWork(cw-1);return}
+    if(e.key===' '&&v==='auth'){e.preventDefault();full=full?0:1;gapTgt=full?0:GBASE}
+    var d=e.key==='ArrowRight'?1:(e.key==='ArrowLeft'?-1:0);if(!d)return;
+    if(v==='auth'){authSeriesIdx=0;quick(function(){ai=(ai+d+A.length)%A.length;wi=0})}
+    if(v==='prog')breathe(function(){di=(di+d+D.length)%D.length})});
+
+  var sx=0,sy=0,s0t=0;
+  app.addEventListener('touchstart',function(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY;s0t=Date.now()},{passive:true});
+  app.addEventListener('touchend',function(e){var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Date.now()-s0t>700)return;
+    if($('#p-work').classList.contains('on')){if(Math.abs(dx)>50&&Math.abs(dy)<60)showWork(cw+(dx<0?1:-1));return}
+    if(e.target.closest&&e.target.closest('#bio')&&dy>50&&Math.abs(dx)<40){setBio(0);return}
+    if(Math.abs(dx)>50&&Math.abs(dy)<60){var d=dx<0?1:-1;
+      if(v==='auth'){authSeriesIdx=0;quick(function(){ai=(ai+d+A.length)%A.length;wi=0})}
+      if(v==='prog')breathe(function(){di=(di+d+D.length)%D.length})}
+  },{passive:true});
+  document.addEventListener('click',function(e){if(!menu.contains(e.target))closeMenu()});
+
+  window.addEventListener('pointermove',function(e){
+    if(_plx===null){_plx=e.clientX;_ply=e.clientY;tx=e.clientX;ty=e.clientY;return}
+    if(Math.abs(e.clientX-_plx)>2||Math.abs(e.clientY-_ply)>2){
+      tx=e.clientX;ty=e.clientY;last=Date.now();_plx=e.clientX;_ply=e.clientY;
+    }
+  },{passive:true});
+
+  var _lastTickT=0,_gCache='',_xrCache='',_ybCache='';
+  function tick(t){
+    if(TCH && t-_lastTickT<20){requestAnimationFrame(tick);return}
+    _lastTickT=t;
+    try{
+      gapCur+=(gapTgt-gapCur)*gapK;
+      var gv=gapCur.toFixed(2)+'px';
+      if(_gCache!==gv){_gCache=gv;st.style.setProperty('--g',gv)}
+      if(!(v==='about'||hoverPaused||evOpen)){
+        var W=st.clientWidth||window.innerWidth,H=st.clientHeight||window.innerHeight,X=tx,Y=ty,bioOpen=app.classList.contains('bio');
+        if(TCH){
+          X=W*(.5+.15*Math.sin(t/9500));Y=H*(.5+.12*Math.cos(t/13000));
+        } else if(!last){
+          X=W*.5;Y=H*.5;
+        }
+        if(!(v==='auth' && !bioOpen)){
+          X=Math.min(Math.max(X,W*.15),W*.85);Y=Math.min(Math.max(Y,H*.15),H*.85);
+        }
+        if(full){X=W/2;Y=H/2}
+        if(v==='auth'&&!NR&&bioOpen){
+          var pl2=Math.min(120,Math.max(80,W*.08)),colW=Math.max(380,Math.min(520,W*.3)),
+          minP=pl2+colW+W*.03+50,lines=Math.ceil((A[ai].b||'').length*7.3/colW),
+          needH=W*.055+34+lines*21+W*.02+36;
+          X=Math.min(X,Math.max(W-minP-7,W*.3));Y=Math.max(Y,Math.min(needH,H*.66))}
+        if(v==='prog'){var e=D[di].e,n=e.length;
+          if(NR){X=W/2;var mh=Math.min(260,H*.36);Y=Math.min(Math.max(Y,mh),H-mh);if(n<2)Y=H*.94}
+          else{var L=Math.max.apply(null,e.map(function(x){return (x.t+x.p).length+9})),mw=L*7.3+W*.06+58;
+            X=W>2*mw+20?Math.min(Math.max(X,mw),W-mw):W/2;Y=H/2;if(n<2)X=W*.94}}
+        var k;
+        if(v==='auth'){
+          k = bioOpen ? 0.07 : 0.05;
+        } else {
+          k = (({home:.04,prog:.05})[v]||.1)*(TCH?.5:1);
+        }
+        cx+=(X-cx)*k;cy+=(Y-cy)*k;
+        st.style.setProperty('--x',cx.toFixed(1)+'px');
+        st.style.setProperty('--y',cy.toFixed(1)+'px');
+        var halfGap = gapCur/2;
+        var xrv = (cx+halfGap).toFixed(1)+'px';
+        var ybv = (cy+halfGap).toFixed(1)+'px';
+        if(_xrCache!==xrv){_xrCache=xrv;st.style.setProperty('--xr',xrv)}
+        if(_ybCache!==ybv){_ybCache=ybv;st.style.setProperty('--yb',ybv)}
+      }
+    }catch(e){console.warn('TL tick',e)}
+    requestAnimationFrame(tick)}
+
+  (function waitInit(){
+    var doneHome = _homeTotalCount===0 || _homeReadyCount >= Math.min(4, _homeTotalCount);
+    var doneAll = _readyCount >= _totalCount || (_totalCount>0 && _readyCount >= Math.ceil(_totalCount*0.8));
+    if(!(doneHome || doneAll)){
+      setTimeout(waitInit, 100);
+      return;
+    }
+    fillHome();
+    requestAnimationFrame(tick);
+    var fixTries=0;
+    var fixer=setInterval(function(){
+      fixTries++;
+      var empty=false;
+      for(var q=0;q<4;q++) if(_curIdx[q]<0) empty=true;
+      if(empty) fillHome();
+      if(!empty || fixTries>40) clearInterval(fixer);
+    },250);
+  })();
+
+  setInterval(function(){
+  if(v==='home')setF(Math.random()*4|0, HOME_POOL.length ? HOME_POOL[Math.random()*HOME_POOL.length|0] : 0);
+  else if(v==='auth'&&A[ai]){
+    authSeriesIdx=(authSeriesIdx+1)%60;
+    var sw=wk();
+    var cur=A[ai].ser ? (sw[authSeriesIdx%sw.length]||sw[0]) : (sw[wi]||sw[0]);
+    var L=aList(cur.t);
+    if(!A[ai].ser && L.length<2) return;
+    var sImg=L.length ? L[authSeriesIdx%L.length] : null;
+    _bgiUrl = sImg || '';
+    st.style.setProperty('--bgi', sImg ? 'url("'+sImg+'")' : 'none');
+    st.style.setProperty('--bgc', tone(cur.id + (sImg ? 0 : authSeriesIdx*7)));
+    updateBgFit();
+  }
+},TCH?1100:500);
+  mark();
+
+  (function(){
+    var fa=$('.fa .ph'), fb=$('.fb .ph');
+    var arrP = IMG['парки района щукино'];
+    var img1 = Array.isArray(arrP) ? arrP[2] : arrP;
+    if(fa && img1){
+      fa.style.backgroundImage='url("'+img1+'")';
+      fa.style.backgroundSize='cover';
+      fa.style.backgroundPosition='center';
+      fa.style.backgroundRepeat='no-repeat';
+      fa.style.backgroundColor='#888';
+    }
+    var img2 = imgFor('ожог', 0);
+    if(fb && img2){
+      fb.style.backgroundImage='url("'+img2+'")';
+      fb.style.backgroundSize='cover';
+      fb.style.backgroundPosition='center';
+      fb.style.backgroundRepeat='no-repeat';
+      fb.style.backgroundColor='#888';
+    }
+  })();
+  var AB=$('#p-about'),LV=$('#lrview'),SP=$('#lrspace'),LVS=$('#lvs'),BG=$('#lrbgs'),LX=$('#lrax'),MCX=0,MCY=0;
+  var CHS=[
+   {id:'c0',len:2.4,bg:[255,255,255],sq:0,pal:[[255,243,246],[253,233,238],[243,243,248],[255,250,251]]},
+   {id:'c1',len:2.6,bg:[243,240,238],sq:1,pal:[[252,228,235],[249,210,222],[253,242,245],[243,236,241]]},
+   {id:'c2',len:7.5,bg:[236,233,232],sq:0,pal:[[244,235,239],[250,219,229],[234,234,242],[252,243,246]]},
+   {id:'c3',len:8.0,bg:[14,14,14],sq:1,ei:-.04,ew:.3,xw:.14,pal:[[62,60,66],[48,46,54],[72,70,76],[40,38,46]]},
+   {id:'c4',len:1.6+7*.5,bg:[18,17,17],sq:0,ei:-.05,ew:.2,xw:.14,pal:[[56,54,60],[68,66,72],[44,42,50],[60,58,64]]},
+   {id:'c5',len:1.8,bg:[244,241,240],sq:1,ei:-.12,ew:.3,pal:[[251,226,234],[247,203,216],[254,242,245],[248,232,238]]},
+   {id:'c6',len:4.4,xw:.12,bg:[248,245,243],sq:0,pal:[[253,241,243],[249,222,230],[244,241,244],[255,250,248]]},
+   {id:'c7',len:3.5,bg:[255,255,255],sq:0,pal:[[255,250,251],[253,237,241],[247,247,250],[255,255,255]]}];
+  var LOOP=0,CST=[];
+  var SCANY=400;
+  var axx=600,axy=320,axg=150,axo=.42,axc=0,axs=0,us=null,hrS=1;
+  var lvSide=1,lvF=1,lvTgt=1,lsLen=300,introStart=0,introT=1,cutW=[0,0],LVB=$('#lrax .sg.v.b');
+  var T={x:600,y:320,g:150,o:.42,c:0},GBp=[[18,22],[82,26],[62,88],[34,72]];
+  var mixc=function(a,b,t){return [Math.round(lp(a[0],b[0],t)),Math.round(lp(a[1],b[1],t)),Math.round(lp(a[2],b[2],t))]};
+  var rnd=function(i,s){var x=Math.sin(i*127.1+s*311.7)*43758.5453;return x-Math.floor(x)-.5};
+  var plu=function(n,f){var a=n%10,b=n%100;return n+' '+(a===1&&b!==11?f[0]:(a>=2&&a<=4&&(b<10||b>=20)?f[1]:f[2]))};
+
+  /* === СТОПКА 9 ФОТО (c2) === */
+  var STK=$('#lrstack'),CARDS=[];
+  for(var i2=0;i2<STACK_URLS.length;i2++){
+    var wv=17+((i2*7)%10),el=document.createElement('div');
+    el.className='card';el.style.width='min('+wv+'vw,'+(wv*12)+'px)';
+    el.innerHTML='<div class="ph" data-l="IMG '+pad(i2+1)+'" style="'+bgHtmlUrl(STACK_URLS[i2], tone(i2+2))+'"></div>';
+    el._d={sx:rnd(i2,1)*2,sy:rnd(i2,2)*2,ox:rnd(i2,3)*2,oy:rnd(i2,4)*2,r0:rnd(i2,5)*44,r1:rnd(i2,6)*9,a:(i2/STACK_URLS.length)*6.2832,dr:rnd(i2,7)*90};
+    STK.appendChild(el);CARDS.push(el)
+  }
+
+  $('#c2 .stats').innerHTML=[
+    ['УЧАСТНИКИ',plu(A.length,['автор','автора','авторов'])],
+    ['РАБОТЫ',plu(WK.length,['произведение','произведения','произведений'])],
+    ['ДЛИТЕЛЬНОСТЬ',plu(D.length,['день','дня','дней'])+' · '+plu(D.reduce(function(s,d){return s+d.e.length},0),['событие','события','событий'])],
+    ['МЕДИУМЫ','Видео · Фото · <span class="nowrap">Инсталляция · Графика</span>']
+  ].map(function(r){return '<div class="st"><small>'+r[0]+'</small>'+r[1]+'</div>'}).join('');
+  var STATS=$$('#c2 .st'),CNT=$('#c2 .cnt');
+  $('#c4 .track').innerHTML=C4_ITEMS.map(function(it,i){
+    var a=A[it.au];
+    return '<div class="au" data-a="'+it.au+'"><div class="ph" data-l="IMG '+pad(i*2+1)+'" style="'+bgHtmlUrl(it.url, tone(i*3+4))+'"></div>'+
+    '<div class="meta"><span>'+(NUM[i]||'')+'</span><div class="nm">'+a.f+'</div><div>'+a.c+'</div>'+
+    '<div class="wk">«'+it.w+'»</div></div></div>'
+  }).join('')+'<div class="cta"><a data-go="auth">все авторы<br>и&nbsp;работы →</a></div>';
+  var TR=$('#c4 .track'),AU=$$('#c4 .au');
+
+  var EVS=[];D.forEach(function(d){d.e.forEach(function(e){EVS.push({d:d.d.slice(0,5),t:e.t,n:e.n,par:!/Вернисаж|Финисаж/.test(e.n)})})});
+  $('#c5 ul').innerHTML=EVS.map(function(e){return '<li><b>'+e.n+(e.par?'<sup>*</sup>':'')+'</b><span>'+e.d+' · '+e.t+'</span></li>'}).join('');
+  var EVL=$$('#c5 li'),LN=$$('#c1 .ln'),B1=$('#c1 .bd'),FA=$('#c1 .fa'),FB=$('#c1 .fb');
+  var T3=$('#c3 .t3'),C3L=$('#c3 .cL'),C3R=$('#c3 .cR'),DTS=$('#c3 .dates'),RING=$$('#c3 .circ circle'),DG=$$('#c3 .circ span'),DASH=$('#c3 .dash'),DCAP=$('#c3 .dcap'),BTM=$('#c3 .btmtxt');
+  var ADR=$$('#c6 .addr i'),ADRE=$('#c6 .addr'),MAP=$('#c6 .map'),T0=$('#c0 .ttl'),T7=$('#c7 .ttl');
+
+  LV.addEventListener('click',function(e){
+    var g=e.target.closest('[data-go]');if(!g)return;
+    var k=g.getAttribute('data-go'),base=LOOP*lh,s=AB.scrollTop;
+    aboutScrollU=((s-base)/lh%LOOP+LOOP)%LOOP;
+    if(k==='auth'){mode='auth';go('auth')}else if(k==='works'){mode='works';go('works')}else go(k)});
+  function applyLens(){
+    var k=NR?.72:1,i,c;
+    LOOP=0;
+    for(i=0;i<CHS.length;i++){
+      c=CHS[i];
+      if(!c.l0base)c.l0base=c.len;
+      c.l0 = (i===2 && NR) ? c.l0base + 1.0 : c.l0base;
+      if(NR){
+        if(i===0) c.l0 = c.l0base * 0.55;
+        if(i===1) c.l0 = c.l0base * 1.05;
+      }
+      c.len=c.l0*k;
+      CST[i]=LOOP;LOOP+=c.len;
+    }
+    if(NR){
+      CHS[2].bg=[42,42,46];
+      CHS[2].pal=[[68,68,72],[84,84,90],[58,58,62],[74,74,80]];
+    } else {
+      CHS[2].bg=[236,233,232];
+      CHS[2].pal=[[244,235,239],[250,219,229],[234,234,242],[252,243,246]];
+    }
+  }
+  var lw=1200,lh=700,ttx=600,tty=320,cardW=260,gapW=40,padL=100,c1y=500;
+  function lmeasure(){
+    applyLens();
+    if(!LV.clientWidth)return;
+    lw=LV.clientWidth;lh=LV.clientHeight;
+    var prev=T0.style.transform;T0.style.transform='none';
+    var r=T0.getBoundingClientRect(),rv=LV.getBoundingClientRect();
+    ttx=Math.min(r.left-rv.left+r.width+30,lw*.88);
+    tty=Math.min(r.top-rv.top+r.height+24,lh*.62);
+    T0.style.transform=prev;
+    var cb=$('#c1 .lead').getBoundingClientRect();
+    c1y=Math.min(lh*.72,Math.max(lh*.5,cb.bottom-rv.top+28));
+    LVS.style.fontSize=Math.min(lw*.019,lh*.032).toFixed(1)+'px';
+    lsLen=LVS.offsetHeight||300;
+    var prevTr=TR.style.transform;TR.style.transform='none';
+    cardW=(AU[0]&&AU[0].offsetWidth)||260;
+    gapW=parseFloat(getComputedStyle(TR).gap)||40;
+    padL=lw*0.12;
+    TR.style.transform=prevTr;
+    SP.style.height=(3*LOOP*lh)+'px';
+    SCANY = lh*.5;
+    if(ADR[1]){
+      var saved=[];
+      for(var si=0; si<ADR.length; si++){ saved.push(ADR[si].style.transform); ADR[si].style.transform='none'; }
+      var rv0 = LV.getBoundingClientRect();
+      var r1 = ADR[1].getBoundingClientRect();
+      SCANY = r1.top - rv0.top;
+      for(var si2=0; si2<ADR.length; si2++){ ADR[si2].style.transform = saved[si2] || ''; }
+    }
+  }
+  window.addEventListener('resize',function(){if(v==='about'){var u0=AB.scrollTop/lh;lmeasure();AB.scrollTop=u0*lh}else lmeasure();updateBgFit()});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(lmeasure);
+  window.addEventListener('load',lmeasure);
+  setTimeout(lmeasure,300);setTimeout(lmeasure,1200);
+  function lenv(u){
+    var i=0,j;
+    for(j=0;j<CHS.length;j++){if(u>=CST[j])i=j}
+    var c=CHS[i],loc=u-CST[i],W=Math.min(2.6,c.len*.5),bg=c.bg,sq=c.sq,pal=c.pal,de=c.len-loc,t,nx;
+    var mp=function(a,b,t){return a.map(function(col,k){return mixc(col,b[k],t)})};
+    if(de<W){t=.5*ss(1-de/W);nx=CHS[(i+1)%CHS.length];bg=mixc(bg,nx.bg,t);sq=lp(sq,nx.sq,t);pal=mp(pal,nx.pal,t)}
+    else if(loc<W){t=.5*ss(1-loc/W);nx=CHS[(i-1+CHS.length)%CHS.length];bg=mixc(bg,nx.bg,t);sq=lp(sq,nx.sq,t);pal=mp(pal,nx.pal,t)}
+    return {bg:bg,sq:sq,pal:pal}
+  }
+
+  function R0(p){var kS=ss(cl(p/.95)),kO=ss(cl((p-.70)/.30)),kH=ss(cl((p-.30)/.60)),iT=ss(cl(introT/.7));
+    if(NR){ kO=ss(cl((p-.35)/.30)); kS=ss(cl(p/.75)); }
+    T0.style.opacity=iT*(1-kO);T0.style.transform='scale('+lp(1,.5,kS)+')';
+    T.x=lp(ttx,lw*.40,kH);T.y=lp(tty,c1y,kH);T.g=150;T.o=lp(.42,.5,kH);T.c=lp(ss(cl((introT-.45)/.55)),.55,kH)}
+  function R1(p){
+    var baseMult = NR ? 2.0 : 1.2;
+    var stepFast = NR ? .05 : .07;
+    var winT = NR ? .22 : .3;
+    for(var i=0;i<LN.length;i++){var t=ss(cl((p*baseMult-i*stepFast)/winT));
+      LN[i].style.opacity=t;LN[i].style.transform='translateY('+((1-t)*16)+'px)'}
+    var bBase = NR ? .22 : .34;
+    var bW = NR ? .18 : .22;
+    var b=ss(cl((p-bBase)/bW));B1.style.opacity=b*.82;B1.style.transform='translateY('+((1-b)*12)+'px)';
+    var q=ss(cl(p)),kA=ss(cl((p-.05)/.42)),kB=ss(cl((p-.30)/.42));
+    FA.style.opacity=kA;FA.style.transform='translateY('+(NR?lp(26,0,kA):lp(34,12,kA)-q*4)+'vh)';
+    FB.style.opacity=kB;FB.style.transform='translateY('+(NR?lp(40,0,kB):lp(60,30,kB)-q*6)+'vh)';
+    T.x=lw*.40;T.y=c1y;T.g=150;T.c=.55;T.o=.5}
+  function R2(p){var ex=ss(cl((p-.88)/.12)),shown=0,i,c,d,t,x,y,r,bl,N=CARDS.length,span=.46/N;
+    var preFade=NR?ss(cl((p-.15)/.40)):0;
+    var opMod=1-preFade*(NR?.95:.8);
+    for(i=0;i<N;i++){c=CARDS[i];d=c._d;t=ss(cl((p-i*span)/(span*2.4)));if(t>.08)shown++;
+      x=lp(d.sx*lw*.60,d.ox*Math.min(lw*.16,160),t)+Math.cos(d.a)*lw*.62*ex;
+      y=lp(d.sy*lh*.55,d.oy*Math.min(lh*.12,92),t)+Math.sin(d.a)*lh*.62*ex;
+      r=lp(d.r0,d.r1,t)+d.dr*ex;
+      c.style.transform='translate(-50%,-50%) translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+r.toFixed(2)+'deg) scale('+(lp(.78,1,t)*(1+ex*.2)).toFixed(3)+')';
+      c.style.opacity=t*(1-ex)*opMod;
+      bl=(1-t)*5+ex*8;c.style.filter=(bl>.1&&!(NR&&TCH))?('blur('+bl.toFixed(2)+'px)'):'none'}
+    STK.style.transform='translateX('+(-ss(cl((p-.55)/.3))*4)+'vw) rotate('+lp(0,3,cl((p-.6)/.26))+'deg)';
+    var fo=ss(cl((p-.97)/.03));
+    CNT.textContent=pad(Math.max(1,Math.round(shown/N*WK.length)))+' / '+pad(WK.length);
+    CNT.style.opacity=ss(cl((p-.01)/.05))*.55*(1-fo);
+    var st0=NR?.30:.40;
+    var sw0=NR?.16:.16;
+    for(i=0;i<STATS.length;i++){t=ss(cl((p-st0-i*.04)/sw0))*(1-fo);
+      STATS[i].style.opacity=t;STATS[i].style.transform='translateY('+((1-t)*14)+'px)'}
+    $('#c2 .lk').style.opacity=ss(cl((p-.65)/.12))*(1-fo);
+    T.x=lw*.5;T.y=lh*.5;T.g=lp(150,0,ss(cl(p/.5)))+ex*lh*2.6;T.c=.25;T.o=.45}
+  function R3(p){
+    var P=NR?{to:.50,ci:.30,cw:.12,cb:0,co:.50,cow:.10,di:.60,dw:.16,r0:.62,rs:.035,rw:.20,ds:.74,dsw:.12,k0:.78,kw:.12,b0:.84,bw:.10,o0:.965,ow:.035}
+            :{to:.42,ci:.20,cw:.14,cb:.06,co:.44,cow:.10,di:.42,dw:.20,r0:.44,rs:.05,rw:.26,ds:.58,dsw:.16,k0:.70,kw:.18,b0:.78,bw:.14,o0:.955,ow:.045};
+    var f=ss(cl(p/.15)),up=ss(cl((p-.15)/.14)),out=cl((p-P.to)/(NR?.10:.10));
+    T3.style.letterSpacing=lp(.38,-.012,f)+'em';
+    T3.style.opacity=lp(.12,1,f)*(1-out);
+    T3.style.transform='translate(-50%,-50%) translateY('+(-up*(NR?22:18))+'vh) scale('+lp(1,.56,up)+')';
+    var oo=ss(cl((p-P.co)/P.cow)),ca=ss(cl((p-P.ci)/P.cw))*(1-oo),cb=ss(cl((p-P.ci-P.cb)/P.cw))*(1-oo);
+    C3L.style.opacity=ca;C3L.style.transform='translateX('+(-(1-ca)*18)+'px)';
+    C3R.style.opacity=cb;C3R.style.transform='translateX('+((1-cb)*18)+'px)';
+    var dIn=ss(cl((p-P.di)/P.dw)),dOut=ss(cl((p-P.o0)/P.ow)),i,ct,dk,ez=function(x){return 1-Math.pow(1-x,3)};
+    DTS.style.opacity=dIn*(1-dOut);
+    DTS.style.transform='translateY('+((1-dIn)*4-dOut*3)+'vh)';
+    for(i=0;i<RING.length;i++){ct=ez(cl((p-P.r0-i*P.rs)/P.rw));
+      RING[i].style.strokeDashoffset=(1-ct).toFixed(4);
+      dk=ss(cl((ct-.3)/.7));DG[i].style.opacity=dk;DG[i].style.transform='translateY('+((1-dk)*.5)+'em)'}
+    DASH.style.transform='scaleX('+ss(cl((p-P.ds)/P.dsw))+')';
+    var kc=ss(cl((p-P.k0)/P.kw));
+    DCAP.style.opacity=kc*.75*(1-dOut);DCAP.style.letterSpacing=lp(.7,.2,kc)+'em';
+    var bt=ss(cl((p-P.b0)/P.bw))*(1-dOut);
+    BTM.style.opacity=bt*.82;BTM.style.transform='translateX(-50%) translateY('+((1-bt)*10)+'px)';
+    cutW=[kc*(1-dOut),bt];
+    T.x=lw*.5;T.y=lh*lp(.45,.5,ss(cl((p-.40)/.1)));T.g=lp(220,110,f)+dIn*130;T.c=.35;T.o=lp(.4,.6,f)}
+  function R4(p){var ent=ss(cl((p+.3)/.52));CE[4].style.transform='translateY('+((1-ent)*6)+'vh)';
+    var s0=padL+cardW/2-lw/2;
+    var sN=padL+AU.length*(cardW+gapW)+cardW/2-lw/2;
+    var q=cl((p-.05)/.80),shift=lp(s0,sN,q);
+    TR.style.transform='translateX('+(-shift)+'px)';
+    var idx=cl(Math.round((shift-s0)/(cardW+gapW)),0,AU.length-1);
+    for(var i=0;i<AU.length;i++)AU[i].classList.toggle('on',i===idx);
+    T.x=cl(padL+idx*(cardW+gapW)+cardW/2-shift,lw*.12,lw*.88);
+    T.y=lh*.74;T.g=cardW+44;T.c=.3;T.o=.45}
+  function R5(p){for(var i=0;i<EVL.length;i++){var t=ss(cl((p*1.2-i*.05)/.3));
+      EVL[i].style.opacity=t;EVL[i].style.transform='translateY('+((1-t)*14)+'px)'}
+    var b=ss(cl((p-.46)/.22));$('#c5 .fn').style.opacity=b*.72;$('#c5 .lk').style.opacity=b;
+    $('#c5 .eye').style.opacity=ss(cl(p/.18))*.6;
+    T.x=Math.min(lw*.32,430);T.y=lh*.5;T.g=150;T.c=.4;T.o=.5}
+  function R6(p){var op=1-ss(cl((p-.9)/.1));
+    for(var i=0;i<ADR.length;i++){var t=ss(cl((p*1.5-i*.1)/.3));ADR[i].style.transform='translateY('+((1-t)*105)+'%)';ADR[i].style.opacity=op}
+    $('#c6 .city').style.opacity=ss(cl((p-.15)/.18))*.6*op;
+    if(MAP)MAP.style.opacity=ss(cl((p-.28)/.24))*op;
+    var cs=ss(cl((p-.5)/.22));$('#c6 .cols').style.opacity=cs*op;$('#c6 .cols').style.transform='translateY('+((1-cs)*16)+'px)';
+    $('#c6 .lk').style.opacity=ss(cl((p-.68)/.2))*op;
+    var mapCx=MCX,mapCy=cl(MCY,lh*.2,lh*.8),f=ss(cl((p-.2)/.6));
+    T.x=lp(lw*.36,mapCx,f);T.y=lp(SCANY,mapCy,f);T.g=lp(150,30,f);T.o=lp(.45,.65,f);T.c=.4}
+  function R7(p){var kIn=ss(cl(p/.22)),s7=ss(cl((p-.15)/.28)),sOut=ss(cl((p-.72)/.15)),kF=ss(cl((p-.80)/.2));
+    $('#c7 .sub').style.opacity=s7*(1-sOut);$('#c7 .btns').style.opacity=s7*(1-sOut);
+    $('#c7 .btns').style.transform='translateY('+((1-s7)*14)+'px)';
+    $('#c7 .btns').style.pointerEvents=(s7*(1-sOut))>.5?'auto':'none';
+    T7.style.opacity=kIn*(1-kF*.4);T7.style.transform='none';
+    T.x=ttx;T.y=tty;T.g=lp(175,160,kF);T.o=lp(.42,.3,kF);T.c=lp(1,.6,kF)}
+  var RF=[R0,R1,R2,R3,R4,R5,R6,R7];
+
+  var CE=CHS.map(function(c){return $('#'+c.id)});
+
+  function lrender(snap){
+    if(!lh)return;
+    var rv2=LV.getBoundingClientRect(),rD=DCAP.getBoundingClientRect(),rB=BTM.getBoundingClientRect();
+    if(MAP){MCX=MAP.offsetLeft+MAP.offsetWidth/2;MCY=MAP.offsetTop+MAP.offsetHeight/2;}
+    var base=LOOP*lh,s=AB.scrollTop;
+    if(s<base*.5){s+=base;AB.scrollTop=s}else if(s>base*1.5){s-=base;AB.scrollTop=s}
+    var raw=(s-base)/lh;raw=((raw%LOOP)+LOOP)%LOOP;
+    if(snap||us===null)us=raw;
+    else{var dl=raw-us;if(dl>LOOP/2)us+=LOOP;else if(dl<-LOOP/2)us-=LOOP;us+=(raw-us)*(NR?.05:.07);us=((us%LOOP)+LOOP)%LOOP}
+    var u=us;
+    introT=cl((performance.now()-introStart)/2800);
+    SPV(LX,'--lin',ss(cl(introT/.5)).toFixed(3));
+    SPV(LX,'--lgrow',(1-Math.pow(1-cl(introT/.9),4)).toFixed(4));
+    var en=lenv(u),lum=(en.bg[0]*.299+en.bg[1]*.587+en.bg[2]*.114)/255,kk=cl((lum-.32)/.3);
+    var fg=mixc([205,202,200],[135,135,138],kk);
+    SPV(LV,'--lbg','rgb('+en.bg.join(',')+')');SPV(LV,'--lfg','rgb('+fg.join(',')+')');
+    var tm=performance.now()/1000;
+    var animAmp = NR ? 22 : 12, animAmp2 = NR ? 18 : 10;
+    for(var b=0;b<4;b++){SPV(BG,'--b'+(b+1),en.pal[b].join(','));
+      SPV(BG,'--g'+(b+1)+'x',(GBp[b][0]+animAmp*Math.sin(tm*(.07+b*.023)+b*1.7)+4*Math.sin(u*.6+b)).toFixed(1)+'%');
+      SPV(BG,'--g'+(b+1)+'y',(GBp[b][1]+animAmp2*Math.cos(tm*(.06+b*.027)+b*2.3)+3*Math.cos(u*.5+b*2)).toFixed(1)+'%')}
+    SPV(BG,'--sy',(((tm*.04+u*.28)%1.6)*100-30).toFixed(1)+'%');
+    SPV(BG,'--sy2',(((tm*.055+u*.19)%1.9)*100-40).toFixed(1)+'%');
+    SPV(BG,'--sx',(((tm*.05+u*.2)%1.8)*100-40).toFixed(1)+'%');
+    SPV(BG,'--wh',ss(cl((lum-.955)/.04)).toFixed(3));
+    SPV(BG,'--pink',(Math.pow(kk,1.3)*0.6).toFixed(3));
+    SPV(BG,'--bri',lp(1.5,1.04,kk).toFixed(2));
+    SPV(BG,'--dim',lp(.3,1,kk).toFixed(3));
+    cutW=[0,0];
+    for(var i=0;i<CHS.length;i++){
+      var d=u-CST[i];if(d<-LOOP/2)d+=LOOP;if(d>LOOP/2)d-=LOOP;
+      var p=d/CHS[i].len,el=CE[i],ei=(CHS[i].ei===undefined?-.34:CHS[i].ei),ew=CHS[i].ew||.34,xw=CHS[i].xw||.34;
+      if(p<ei-.02||p>1.04){el.style.visibility='hidden';continue}
+      el.style.visibility='visible';
+      el.style.opacity=Math.min(ss(cl((p-ei)/ew)),ss(cl((1.04-p)/xw)));
+      RF[i](p)}
+    if(NR){T.x=lw*.075;T.g=Math.min(T.g,40)}
+    var mk='none';
+    if(!NR&&(cutW[0]>.01||cutW[1]>.01)){
+      var et=axy+Math.max(0,axg)/2,g='linear-gradient(180deg,#000 0',i3,rr,a,bb,e2;
+      for(i3=0;i3<2;i3++){if(cutW[i3]<.01)continue;rr=i3?rB:rD;a=rr.top-rv2.top-10-et;bb=rr.bottom-rv2.top+10-et;
+        e2=a+(bb-a)*cutW[i3];g+=',#000 '+a.toFixed(1)+'px,transparent '+a.toFixed(1)+'px,transparent '+e2.toFixed(1)+'px,#000 '+e2.toFixed(1)+'px'}
+      mk=g+',#000 100%)'}
+    if(LVB._mk!==mk){LVB._mk=mk;LVB.style.webkitMaskImage=mk;LVB.style.maskImage=mk}
+    var p5=(u-CST[5])/CHS[5].len,hrT=1-.95*Math.min(ss(cl((p5+.25)/.3)),ss(cl((1.15-p5)/.3)));
+    hrS+=(hrT-hrS)*(snap?1:.06);SPV(LX,'--hr',hrS.toFixed(3));
+    var k=snap?1:.07;
+    axx+=(T.x-axx)*k;axy+=(T.y-axy)*k;
+    axg+=(T.g-axg)*(snap?1:.06);axo+=(T.o-axo)*(snap?1:.06);
+    axc+=(T.c-axc)*(snap?1:.05);axs+=(en.sq-axs)*(snap?1:.04);
+    SPV(LV,'--lax',axx.toFixed(1)+'px');SPV(LV,'--lay',axy.toFixed(1)+'px');
+    SPV(LV,'--lgap',Math.max(0,axg).toFixed(1)+'px');
+    SPV(LX,'--axo',axo.toFixed(3));SPV(LX,'--sti',axs.toFixed(3));
+    SPV(LX,'--sp',((performance.now()*.004)%19).toFixed(1)+'px');
+    $('#lvc').style.opacity=axc*.7;
+    var Ls=lsLen||300,half=Math.max(0,axg)/2;
+    var roomB=lh-(axy+half+14)-10,roomA=axy-half-14-10;
+    if(lvSide>0){lvTgt=(roomB<Ls&&roomA>roomB)?0:1}else{lvTgt=(roomA<Ls&&roomB>roomA)?0:1}
+    lvF+=(lvTgt-lvF)*(snap?1:.12);
+    if(lvTgt===0&&lvF<.06){lvSide=-lvSide;lvTgt=1}
+    var tp=lvSide>0?axy+half+14:axy-half-14-Ls;
+    tp=cl(tp,10,Math.max(10,lh-Ls-10));
+    LVS.style.left=(axx+14).toFixed(1)+'px';LVS.style.top=tp.toFixed(1)+'px';
+    var lvBase=cl(axc*1.5-.55)*.95*lvF;
+    var secIdx=0;for(var si=0;si<CHS.length;si++)if(u>=CST[si])secIdx=si;
+    if(secIdx===6){var edgeDist=Math.min(u-CST[6],CST[6]+CHS[6].len-u);lvBase*=1-ss(cl(edgeDist/0.5))}
+    LVS.style.opacity=lvBase.toFixed(3);
+    var dd=Math.min(u,LOOP-u);
+    $('#lrhint').style.opacity=cl(1-dd/.5)*.5;
+    $('#lrbarline').style.width=(u/LOOP*100)+'%'}
+  function ltick(){try{if(v==='about'&&lrInit)lrender(false)}catch(e){console.warn('TL ltick',e)}requestAnimationFrame(ltick)}
+  lmeasure();requestAnimationFrame(ltick);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);
+else setTimeout(boot,0);
+})();
+</script>
