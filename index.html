@@ -417,7 +417,7 @@
 .it p { min-height: 45px; }
 /* ====== КРАСИВАЯ КАРТА ====== */
 #c6 .map {
-  background-image: url('https://static-maps.yandex.ru/1.x/?ll=30.3870,59.9490&z=15&l=map&size=650,450') !important;
+  background-image: url('https://static-maps.yandex.ru/1.x/?ll=30.3870,59.9490&z=15&l=map&size=650,450&pt=30.3870,59.9490,pm2rdm') !important; !important;
   background-size: cover !important;
   background-position: center !important;
   filter: grayscale(1) contrast(1.1); /* Делает карту ч/б */
@@ -431,6 +431,30 @@
 } 
 /* Чтобы линии были ПОВЕРХ карты */
 #lrax { z-index: 99 !important; } 
+/* --- 10. Кнопка "Смотреть работы" - просто текст с подчеркиванием --- */
+#bio .bio-works { background: transparent !important; color: inherit !important; padding: 0 !important; text-decoration: underline !important; text-underline-offset: 4px !important; font-size: 12px !important; letter-spacing: 0.05em !important; margin-top: 2em !important; border: none !important; cursor: pointer !important; display: inline-block !important; }
+#bio .bio-works:hover { opacity: 0.6 !important; }
+
+/* --- 6. Идеальная сетка работ (ровные фото и тексты) --- */
+#grid { align-items: start !important; } /* Выравниваем сетку по верхнему краю */
+.it { display: flex !important; flex-direction: column !important; height: 100% !important; }
+.it .ph, .it img.ph { aspect-ratio: 4/5 !important; height: auto !important; width: 100% !important; object-fit: cover !important; display: block !important; background-color: #eee !important; }
+.it p { height: 50px !important; overflow: hidden !important; margin-top: 8px !important; display: -webkit-box !important; -webkit-line-clamp: 3 !important; -webkit-box-orient: vertical !important; }
+
+/* --- 2, 5. Контакты: фон, отступы, выравнивание --- */
+#p-contacts .ct { background-image: url('ТУТ_ССЫЛКА_НА_ФОТО_ФОНА'); background-size: cover; background-position: center; } /* Если есть фото фона, вставьте ссылку в кавычки */
+.info small { margin-bottom: 0.2em !important; display: block; }
+.info p { margin-bottom: 1.5em !important; font-size: clamp(16px, 1.8vw, 26px) !important; line-height: 1.3 !important; }
+.info > div:last-child p { margin-bottom: 0; }
+/* QR-код на уровень текста */
+.qr { margin-top: 0 !important; align-self: flex-start !important; width: min(200px, 25vw) !important; margin-left: 40px !important; }
+
+/* --- 3, 4. Карта, точки, линии --- */
+#c6 .map { border: none !important; } /* Убираем старую рамку */
+#c6 .pin { width: 12px !important; height: 12px !important; background: #000 !important; border-radius: 50% !important; box-shadow: 0 0 0 5px #fff, 0 0 0 6px #000 !important; left: 50% !important; top: 50% !important; margin: -6px 0 0 -6px !important; position: absolute !important; z-index: 10 !important; }
+#lrax { z-index: 99 !important; pointer-events: none !important; } /* Линии ПОВЕРХ карты */
+#c6 .cols { bottom: 18vh !important; } /* Поднимаем текст вверх, чтобы он не пересекался с линией */
+#c6 .lk { bottom: 8vh !important; } /* Опускаем кнопку "контакты и схема" вниз */
 </style>
 
 <div id="app" data-v="home" data-tl="limin-v17">
@@ -497,11 +521,11 @@
  <div class="page" id="p-prog-page"><div class="prog-wrap"><h1>Программа</h1><div class="prog-list" id="progList"></div></div></div>
  <div class="page" id="p-contacts"><div class="ct">
   <h1>Контакты</h1>
-  <div class="info">
+    <div class="info">
     <div class="cm"><small>Telegram</small><p><a href="https://t.me/+MouxkGL8oCI1MzUy" target="_blank" rel="noopener">t.me/terraliminis</a></p></div>
     <div class="cm"><small>Почта</small><p><a href="mailto:inbox@terraliminis.ru">inbox@terraliminis.ru</a></p></div>
-    <div><small>Адрес</small><p>ул. Красного Текстильщика 10-12, Санкт-Петербург</p></div>
-    <div><small>Часы работы</small><p>Ежедневно 12:00–20:00</p></div>
+    <div><small>Адрес</small><p>Санкт-Петербург,<br>ул. Красного Текстильщика 10-12</p></div>
+    <div><small>Часы работы</small><p>Ежедневно<br>12:00–20:00</p></div>
   </div>
   <div class="cbtns"><a href="https://t.me/+MouxkGL8oCI1MzUy" target="_blank" rel="noopener">Telegram</a><a href="mailto:inbox@terraliminis.ru">Почта</a></div>
   <div class="qr">QR</div>
@@ -1607,5 +1631,40 @@ $$('.lb-prev, .lb-next').forEach(function(btn){
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);
 else setTimeout(boot,0);
 })();
+ // --- ИСПРАВЛЕНИЕ КАРТИНКИ ВАНЬКИНЫ ИГРУШКИ 5 ---
+IMG['ванькины игрушки 5'] = 'https://ik.imagekit.io/pusaw0w7t/%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%20%D0%B2%D0%B5%D1%80%D1%82%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%20%D0%BE%D0%B1%D1%8B%D1%87%D0%BD%D1%8B%D0%B9/Frame%202131331158.png?updatedAt=1793394928424';
+
+// --- 8. ЗАМЕНА ФОТО "ВРЕМЯ ЦВЕСТИ" ---
+IMG['время цвести (серия)'] = [
+  'https://ik.imagekit.io/pusaw0w7t/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F%20%D1%86%D0%B2%D0%B5%D1%81%D1%82%D0%B8%20-2.webp?updatedAt=1793194101321',
+  'https://ik.imagekit.io/pusaw0w7t/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F%20%D1%86%D0%B2%D0%B5%D1%81%D1%82%D0%B8%20-3.webp?updatedAt=1793194093682',
+  'https://ik.imagekit.io/pusaw0w7t/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F%20%D1%86%D0%B2%D0%B5%D1%81%D1%82%D0%B8%20-1.webp?updatedAt=1793194106437'
+];
+
+// --- 6 (текст) и 7. Кнопка "Смотреть работы" ---
+setTimeout(function(){
+  var btn = document.querySelector('#bio .bio-works');
+  if(btn) {
+    // Очищаем старые клики и вешаем новый
+    var newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+    newBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var author = A[ai].f; // Имя текущего автора
+      gridFilter = ai; // Фильтруем по индексу автора
+      renderGrid(); // Перерисовываем сетку
+      go('works'); // Открываем страницу
+    });
+  }
+}, 1000);
+
+// --- 1. ЗАМЕНА ЛОГО В ФУТЕРЕ (одна картинка) ---
+setTimeout(function(){
+  var lgs = document.querySelector('#bar .lgs');
+  if(lgs) {
+    lgs.innerHTML = '<span class="lg"><img src="https://ik.imagekit.io/pusaw0w7t/Group%202136140620.png" alt="Logo"></span>';
+  }
+}, 1000);
 </script>
 </script>
