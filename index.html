@@ -1207,7 +1207,7 @@ $$('#bar .lg').forEach(function(s,i){ if(i===0) s.innerHTML='<img src="'+fl+'" a
         : '<div class="ph" style="'+bgHtml(w.t, tone(cw), w.id)+'"></div>';
       $('#p-work').innerHTML=
         '<button class="ar l" data-d="-1">←</button><button class="ar r" data-d="1">→</button>'+pic+
-        '<div><h3>'+w.t+'</h3><p>'+A[w.a].f+'</p><p>'+info.year+'<br>'+info.tech+'<br>'+info.size+'</p><p>'+info.desc+'</p></div>';
+                '<div><h3>'+w.t+'</h3><p>'+A[w.a].f+'</p><p>'+info.year+'<br>'+info.tech+'<br>'+info.size+'</p><p>'+noWidow(info.desc)+'</p></div>';
       $('#p-work').classList.add('on')
     }
     app.insertAdjacentHTML('beforeend','<div id="lb"><button class="lb-prev" style="position:absolute;left:20px;font-size:40px;background:none;border:0;cursor:pointer;z-index:80;color:#000;padding:20px;">←</button><img alt=""><button class="lb-next" style="position:absolute;right:20px;font-size:40px;background:none;border:0;cursor:pointer;z-index:80;color:#000;padding:20px;">→</button></div>');
