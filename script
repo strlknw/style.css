@@ -1,5 +1,4 @@
 
-<script>
 (function(){
 function noWidow(s){return s.replace(new RegExp('(\\s)(через|между|перед|после|без|для|при|над|под|из|от|до|по|на|за|со|об|во|в|к|ко|с|у|и|а|но|не|ни|же|ли|бы|или|это|этот|эта|эти|то|как|что|так|их|ее|её|его|мы|вы|он|она|они|о)(\\s)','gi'),'$1$2\u00A0');}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
@@ -1064,4 +1063,3 @@ $('#p-work').onclick=function(e){
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);
 else setTimeout(boot,0);
 })();
-</script>
