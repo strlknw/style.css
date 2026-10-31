@@ -382,6 +382,22 @@
 #bar .lgs{gap:28px;align-items:center}
 #bar .lg{width:72px!important;height:28px!important;display:flex!important;align-items:center;justify-content:center}
 #bar .lg img{width:auto!important;height:auto!important;max-width:100%;max-height:100%;object-fit:contain;display:block}
+/* Выравнивание логотипов внизу */
+#bar .lg { height: 24px !important; width: auto !important; display: flex !important; align-items: center !important; }
+#bar .lg img { height: 20px !important; width: auto !important; max-width: 90px !important; object-fit: contain !important; }
+/* Огромная дата на странице программы */
+#vd { font-family: Lora, serif; font-size: clamp(40px, 8vw, 120px); line-height: 1; letter-spacing: -.015em; color: #fff; mix-blend-mode: difference; }
+/* Партнеры и QR-код */
+.pt { display: flex !important; flex-wrap: wrap !important; justify-content: space-between !important; align-items: center !important; gap: 20px !important; border-top: 1px solid #ccc; padding-top: 20px; margin-top: 20px; }
+.pt small { width: 100%; margin-bottom: 10px; }
+.lgb { width: auto !important; height: 40px !important; aspect-ratio: auto !important; }
+.lgb img { height: 100% !important; width: auto !important; max-width: 120px !important; object-fit: contain !important; }
+
+/* Поднимаем QR-код */
+.qr { align-self: flex-start !important; margin-top: -80px !important; }
+/* Ровная сетка работ */
+.it .ph, .it img.ph { aspect-ratio: 4/5 !important; object-fit: cover !important; width: 100% !important; height: auto !important; display: block; background-color: #eee; }
+.it p { min-height: 40px; }
 </style>
 
 <div id="app" data-v="home" data-tl="limin-v17">
@@ -881,7 +897,7 @@ URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
       $('#g-auth').addEventListener('click',function(e){
         if(v!=='auth') return;
         if(e.target.closest('.bio-x')){ e.stopPropagation(); setBio(false); return; }
-        if(e.target.closest('.bio-works')) return;
+        if(e.target.closest('.bio-works')){ go('works'); return; }
         if(e.target.closest('#vn span')) return;
         if(e.target.closest('#bio')) return;
         if(e.target.closest('#wt span')) return;
@@ -1066,7 +1082,7 @@ URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
       for(var r=0;r<3;r++)for(var c=0;c<3;c++){
         var X=ix+c,Y=iy+r,im=new Image();im.alt='';
         (function(im,ou){im.onerror=function(){im.onerror=null;im.src=ou}})(im,'https://tile.openstreetmap.org/'+Z+'/'+X+'/'+Y+'.png');
-        im.src='https://basemaps.cartocdn.com/light_all/'+Z+'/'+X+'/'+Y+'@2x.png';
+        im.src='https://tile.openstreetmap.org/'+Z+'/'+X+'/'+Y+'@.png';
         g.appendChild(im);
       }
       m.innerHTML='';m.appendChild(g);
@@ -1101,16 +1117,36 @@ URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
         '<div><h3>'+w.t+'</h3><p>'+A[w.a].f+'</p><p>'+info.year+'<br>'+info.tech+'<br>'+info.size+'</p><p>'+info.desc+'</p></div>';
       $('#p-work').classList.add('on')
     }
-    app.insertAdjacentHTML('beforeend','<div id="lb"><img alt=""></div>');
-    $('#lb').onclick=function(){this.classList.remove('on')};
+    app.insertAdjacentHTML('beforeend','<div id="lb"><button class="lb-prev" style="position:absolute;left:20px;font-size:40px;background:none;border:0;cursor:pointer;z-index:80;color:#000;padding:20px;">←</button><img alt=""><button class="lb-next" style="position:absolute;right:20px;font-size:40px;background:none;border:0;cursor:pointer;z-index:80;color:#000;padding:20px;">→</button></div>');
+    var lbIdx = 0;
+$('#lb').onclick=function(e){ 
+  if(e.target.tagName === 'IMG') this.classList.remove('on'); 
+};
+$$('.lb-prev, .lb-next').forEach(function(btn){
+  btn.onclick = function(e){
+    e.stopPropagation(); // не закрывать при клике на стрелку
+    lbIdx += btn.classList.contains('lb-prev') ? -1 : 1;
+    if(lbIdx < 0) lbIdx = curL.length - 1;
+    if(lbIdx >= curL.length) lbIdx = 0;
+    $('#lb img').src = curL[lbIdx];
+  };
+});
     document.addEventListener('keydown',function(e){if(e.key==='Escape')$('#lb').classList.remove('on')});
     $('#p-work').onclick=function(e){
-      if(e.target.matches('.pw img')){$('#lb img').src=e.target.src;$('#lb').classList.add('on');return}
+      if(e.target.matches('.pw img')){
+  lbIdx = curL.indexOf(e.target.src);
+  if(lbIdx === -1) lbIdx = 0;
+  $('#lb img').src = e.target.src;
+  $('#lb').classList.add('on');
+  return;
+}
       var d=e.target.closest('.work-dots i');
       if(d){var k=+d.getAttribute('data-k'),im=$('#p-work .pw img');if(im)im.src=curL[k];
         $$('#p-work .work-dots i').forEach(function(x,n){x.classList.toggle('on',n===k)});return}
       var b=e.target.closest('.ar');if(b){showWork(cw+ +b.getAttribute('data-d'));return}
-      if(!e.target.closest('.ph,.pw,h3,p'))$('#p-work').classList.remove('on')};
+      if(!e.target.closest('.ph,.pw,h3,p,.ar,#lb')) {
+  $('#p-work').classList.remove('on');
+}
 
       document.addEventListener('keydown',function(e){
         if(e.key==='Escape'){$('#p-work').classList.remove('on');setBio(0);F.forEach(function(f){f.classList.remove('active')});closeEv();closeMenu()}
