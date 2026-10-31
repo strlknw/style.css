@@ -428,6 +428,15 @@
 
 /* Линии поверх карты */
 #lrax { z-index: 99 !important; pointer-events: none !important; }
+/* Карта */
+#c6 .map {
+  background-image: url('https://ik.imagekit.io/pusaw0w7t/Frame%201.png') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  border: none !important;
+}
+#c6 .mt, #c6 .pin { display: none !important; } /* Прячем старую карту и точку */
+#c6 .cols { bottom: 18vh !important; } /* Текст не пересекает линию */
 </style>
 
 <div id="app" data-v="home" data-tl="limin-v17">
@@ -492,18 +501,12 @@
  <div class="page" id="p-works"><div class="grid" id="grid"></div></div>
  <div class="page" id="p-work"></div>
  <div class="page" id="p-prog-page"><div class="prog-wrap"><h1>Программа</h1><div class="prog-list" id="progList"></div></div></div>
- <div class="page" id="p-contacts"><div class="ct">
-  <h1>Контакты</h1>
-    <div class="info">
-    <div class="cm"><small>Telegram</small><p><a href="https://t.me/+MouxkGL8oCI1MzUy" target="_blank" rel="noopener">t.me/terraliminis</a></p></div>
-    <div class="cm"><small>Почта</small><p><a href="mailto:inbox@terraliminis.ru">inbox@terraliminis.ru</a></p></div>
-    <div><small>Адрес</small><p>Санкт-Петербург,<br>ул. Красного Текстильщика 10-12</p></div>
-    <div><small>Часы работы</small><p>Ежедневно<br>12:00–20:00</p></div>
-  </div>
-  <div class="cbtns"><a href="https://t.me/+MouxkGL8oCI1MzUy" target="_blank" rel="noopener">Telegram</a><a href="mailto:inbox@terraliminis.ru">Почта</a></div>
-  <div class="qr">QR</div>
-  <div class="pt"><small>Партнёры</small><a href="#" class="lgb"></a><a href="#" class="lgb"></a><a href="#" class="lgb"></a><a href="#" class="lgb"></a><a href="#" class="lgb"></a><a href="#" class="lgb"></a><a href="#" class="lgb"></a></div>
- </div></div>
+  <div class="page" id="p-contacts">
+   <div class="ct custom-contacts" style="background-image: url('https://ik.imagekit.io/pusaw0w7t/%D0%BB%D0%BE%D0%B3%D0%BE%20%D0%BF%D0%B0%D1%80%D1%82%D0%BD%D0%B5%D1%80%D0%BE%D0%B2/Group%202136140626.png'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; height: 100%; position: relative; display: block;">
+      <a href="https://t.me/+MouxkGL8oCI1MzUy" target="_blank" rel="noopener" style="position: absolute; top: 30%; left: 10%; width: 20%; height: 10%; cursor: pointer; display: block;"></a>
+      <a href="mailto:inbox@terraliminis.ru" target="_blank" rel="noopener" style="position: absolute; top: 30%; left: 40%; width: 25%; height: 10%; cursor: pointer; display: block;"></a>
+   </div>
+ </div>
  <div id="sw"></div>
  <div id="mode"><span data-m="auth">авторы</span><i>/</i><span data-m="works">работы</span></div>
  <div id="bar">
@@ -1101,7 +1104,7 @@ URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
       $$('.lgb').forEach(function(a,i){if(P[i])a.innerHTML='<img src="'+pl+P[i]+'" alt="">'});
       var q=$('.qr');if(q)q.innerHTML='<img src="'+PB+'qr-code%20(1).png" alt="QR">';
       var fp=PB+'%D0%BB%D0%BE%D0%B3%D0%BE%20%D1%84%D1%83%D1%82%D0%B5%D1%80/';
-      var F2=['Group%202136140620.png'];
+      var F2=['https://ik.imagekit.io/pusaw0w7t/Group%202136140620.png?updatedAt=1793412954715'];
       $$('#bar .lg').forEach(function(s,i){if(F2[i])s.innerHTML='<img src="'+fp+F2[i]+'" alt="">'});
     })();
     (function(){
@@ -1236,7 +1239,8 @@ $$('.lb-prev, .lb-next').forEach(function(btn){
               var pl2=Math.min(120,Math.max(80,W*.08)),colW=Math.max(380,Math.min(520,W*.3)),
               minP=pl2+colW+W*.03+50,lines=Math.ceil((A[ai].b||'').length*7.3/colW),
               needH=W*.055+34+lines*21+W*.02+36;
-              X=Math.min(X,Math.max(W-minP-7,W*.3));Y=Math.max(Y,Math.min(needH,H*.66))}
+              X=Math.min(X,Math.max(W-minP-7,W*.3));Y=Math.max(Y,Math.min(needH,H*.9))
+
             if(v==='prog'){var e=D[di].e,n=e.length;
               if(NR){X=W/2;var mh=Math.min(260,H*.36);Y=Math.min(Math.max(Y,mh),H-mh);if(n<2)Y=H*.94}
               else{var L=Math.max.apply(null,e.map(function(x){return (x.t+x.p).length+9})),mw=L*7.3+W*.06+58;
@@ -1531,6 +1535,7 @@ $$('.lb-prev, .lb-next').forEach(function(btn){
       function lrender(snap){
         if(!lh)return;
         var rv2=LV.getBoundingClientRect(),rD=DCAP.getBoundingClientRect(),rB=BTM.getBoundingClientRect();
+       var bioEl = document.getElementById('bio'); if(bioEl) bioEl.style.marginBottom = '44px';
         if(MAP){MCX=MAP.offsetLeft+MAP.offsetWidth/2;MCY=MAP.offsetTop+MAP.offsetHeight/2;}
         var base=LOOP*lh,s=AB.scrollTop;
         if(s<base*.5){s+=base;AB.scrollTop=s}else if(s>base*1.5){s-=base;AB.scrollTop=s}
