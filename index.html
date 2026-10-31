@@ -1319,8 +1319,65 @@ $$('.lb-prev, .lb-next').forEach(function(btn){
         st.style.setProperty('--bgc', tone(cur.id + (sImg ? 0 : authSeriesIdx*7)));
         updateBgFit();
       }
-    },TCH?1100:500);
+        },TCH?1100:500);
       mark();
+
+      /* ===== РОУТИНГ: адрес + кнопки назад/вперёд ===== */
+      var IN_FRAME = (window.self !== window.top);
+      var routeReady = false, lastRoute = '';
+      function curRoute(){
+        if(v==='home') return '';
+        if(v==='about') return 'about';
+        if(v==='auth') return 'authors/'+(ai+1);
+        if(v==='works') return 'works';
+        if(v==='prog' || v==='prog-page') return 'program/'+(di+1);
+        if(v==='contacts') return 'contacts';
+        return '';
+      }
+      function syncRoute(){
+        if(!routeReady) return;
+        var r = curRoute();
+        if(r === lastRoute) return;
+        lastRoute = r;
+        if(IN_FRAME){
+          window.parent.postMessage({tl:'route', route:r}, '*');
+        } else {
+          var h = r ? '#'+r : '';
+          if(location.hash !== h) history.pushState(null, '', h || (location.pathname+location.search));
+        }
+      }
+      function applyRoute(raw){
+        if(busy){ setTimeout(function(){ applyRoute(raw) }, 300); return; }
+        var r = String(raw||'').replace(/^#/, '');
+        var p = r.split('/'), k = p[0], n = parseInt(p[1], 10);
+        var t = k==='authors' ? 'auth' : (k==='program' ? 'prog' : (k || 'home'));
+        if(['home','about','auth','works','prog','contacts'].indexOf(t) < 0) t = 'home';
+        if(t==='auth' && n>=1 && n<=A.length){ ai=n-1; wi=0; authSeriesIdx=0; }
+        if(t==='prog' && n>=1 && n<=D.length){ di=n-1; }
+        if(t==='auth' && NR) t = 'works';
+        $('#p-work').classList.remove('on');
+        var cur = (v==='prog-page') ? 'prog' : v;
+        if(t === cur){
+          if(t==='auth' || (t==='prog' && !NR)) paint();
+          return;
+        }
+        go(t);
+      }
+      setInterval(syncRoute, 250);
+      window.addEventListener('message', function(e){
+        if(IN_FRAME && e.source !== window.parent) return;
+        var d = e.data;
+        if(d && d.tl === 'goto') applyRoute(d.route);
+      });
+      if(IN_FRAME){
+        routeReady = true;
+        window.parent.postMessage({tl:'ready'}, '*');
+      } else {
+        window.addEventListener('popstate', function(){ applyRoute(location.hash); });
+        if(location.hash) applyRoute(location.hash);
+        routeReady = true;
+        lastRoute = curRoute();
+      }
 
       (function(){
         var fa=$('.fa .ph'), fb=$('.fb .ph');
