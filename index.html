@@ -407,6 +407,17 @@
 #bar .lgs { display: flex !important; margin-left: auto !important; gap: 0 !important; }
 #bar .lg { width: auto !important; height: 32px !important; display: flex !important; align-items: center !important; background: none !important; border: none !important; }
 #bar .lg img { height: 100% !important; width: auto !important; object-fit: contain !important; }
+/* футер: лого справа внизу */
+#bar{padding-right:14px!important}
+#bar .lgs{display:flex!important;margin-left:auto!important;justify-content:flex-end!important;gap:0!important}
+#bar .lg{width:auto!important;height:32px!important;justify-content:flex-end!important}
+#bar .lg img{height:100%!important;width:auto!important;max-width:none!important}
+
+/* авторы: чуть меньше отступ сверху в блоке «об авторе» */
+#bio{padding-top:3.4vw!important}
+
+/* события: вертикальная дата у линии */
+#vd{font-size:clamp(15px,1.9vw,30px);left:calc(var(--x) - .4em);top:16px;color:#fff;mix-blend-mode:difference}
 </style>
 
 <div id="app" data-v="home" data-tl="limin-v17">
@@ -484,7 +495,7 @@
    <span class="date">18 — 22.03.27</span>
    <span class="addr desk">Санкт-Петербург, ул. Красного Текстильщика 10-12</span>
    <span class="addr mob">Санкт-Петербург</span>
-   <span class="lgs"><span class="lg">LOGO</span><span class="lg">LOGO</span><span class="lg">LOGO</span></span>
+   <span class="lgs"><span class="lg"></span></span>
  </div>
  <div id="menu"><b>МЕНЮ</b><ul id="ml"></ul></div>
 </div>
@@ -573,7 +584,7 @@ function boot(){
     'разбирая на слои': {year:'2023–2026', tech:'Инсталляция', size:'80 × 120 см', desc:'Художница разбирает объекты наnbspслои, показывая, чтоnbspцелое всегда скрываетnbspструктуру.'},
     'держу себя в руках': {year:'2023–2026', tech:'Объект, инсталляция', size:'40 × 30 × 30 см', desc:'Жест удержания как способ справиться сnbspнеустойчивостью. Название одновременно описывает физическое действие иnbspэмоциональноеnbspсостояние.'},
     'сумбур создания порядка': {year:'2023–2026', tech:'Инсталляция', size:'12 × 20 × 90 см', desc:'Работа о парадоксе наведения порядка: чтобыnbspсоздать структуру, нужно сначала создатьnbspхаос.'},
-    'как ухаживать за поверхностью с помощью света': {year:'2026', tech:'Объект, инсталляция', size:'20 × 28 см', desc:'Исследование материальности фотографии: какnbspизображение перестаёт быть плоским иnbspстановится физическимnbspобъектом.'},
+    'как ухаживать за поверхностью с помощью света (серия)': {year:'2026', tech:'Объект, инсталляция', size:'20 × 28 × 11 см', desc:'Исследование материальности фотографии: какnbspизображение перестаёт быть плоским иnbspстановится физическимnbspобъектом.'},
     'привносим изменения': {year:'2021–2026', tech:'3D-графика, живопись, инсталляция', size:'60 × 90 см', desc:'Как отдельный жест или объект меняет конфигурациюnbspцелого.'},
     'это было, но я не уверена': {year:'2024–2026', tech:'Фотография', size:'30 × 40 см', desc:'Название фиксирует состояние памяти, в которомnbspграница междуnbsp«было»nbspиnbsp«неnbspбыло»nbspразмыта.'},
     'парки района щукино': {year:'2023–2026', tech:'Фотография', size:'40 × 60 см', desc:'Серия посвящена паркам района Щукино вnbspМоскве. Заnbspвнешней документальностью скрывается тема отдаления человекаnbspотnbspприроды.'},
@@ -699,8 +710,27 @@ var GF={'удар':[167,195],'ласточка':[196,169,197],'ожог':[199,20
 var VT={'удар':168,'ласточка':170,'ожог':172,'споры шума':174,'пазл':176,'на перекрестке а (серия)':178,'плакальщицы':182,'сумбур создания порядка':184,'как ухаживать за поверхностью с помощью света (серия)':186,'сердцевина':190,'в количестве трёх, в количестве более трёх':192,'на случай гостей':194,
  'отблеск':147,'время цвести (серия)':['148_p5zHblIQQ','149_BVMQQscq7',150],'stars. first test.':151,'borisov-musatov tombstone.':152,'my own hand of mysteries':153,'ванькины игрушки 1':'154_XC7HeC1wv','ванькины игрушки 2':'155_jVf9eYtIW','ванькины игрушки 3':156,'ванькины игрушки 4':157,'ванькины игрушки 5':158,'из ниоткуда':159};
 var URLS={};
-URLS[BK+' (серия)']=[PO+BN+'-3%201.png',PO+BN+'-2%201.png',PO+'image%20412.png'];
-function pk(m,t){var k=String(t||'').toLowerCase().trim();
+URLS[BK+' (серия)']=[
+ PGF+'Frame%202131331215.png?updatedAt=1793395118167',
+ PGF+'Frame%202131331208.png?updatedAt=1793395124357',
+ PGF+'Frame%202131331185.png?updatedAt=1793395121773'
+];
+URLS['время цвести (серия)']=[
+ 'https://ik.imagekit.io/pusaw0w7t/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F%20%D1%86%D0%B2%D0%B5%D1%81%D1%82%D0%B8%20-2.webp?updatedAt=1793194101321',
+ 'https://ik.imagekit.io/pusaw0w7t/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F%20%D1%86%D0%B2%D0%B5%D1%81%D1%82%D0%B8%20-3.webp?updatedAt=1793194093682',
+ 'https://ik.imagekit.io/pusaw0w7t/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F%20%D1%86%D0%B2%D0%B5%D1%81%D1%82%D0%B8%20-1.webp?updatedAt=1793194106437'
+];
+var TILE_FIX={
+ 'ванькины игрушки 5':'https://ik.imagekit.io/pusaw0w7t/%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%20%D0%B2%D0%B5%D1%80%D1%82%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%20%D0%BE%D0%B1%D1%8B%D1%87%D0%BD%D1%8B%D0%B9/Frame%202131331158.png?updatedAt=1793394928424',
+ '0°00′00′′':'https://ik.imagekit.io/pusaw0w7t/0000.jpg?updatedAt=1793194088933',
+ 'держу себя в руках':'https://ik.imagekit.io/pusaw0w7t/%D0%94%D0%B5%D1%80%D0%B6%D1%83%20%D1%81%D0%B5%D0%B1%D1%8F%20%D0%B2%20%D1%80%D1%83%D0%BA%D0%B0%D1%85.jpg?updatedAt=1793194115440',
+ 'разбирая на слои':'https://ik.imagekit.io/pusaw0w7t/%D1%80%D0%B0%D0%B7%D0%B1%D0%B8%D1%80%D0%B0%D1%8F%20%D0%BD%D0%B0%20%D1%81%D0%BB%D0%BE%D0%B8%20-%202.jpg?updatedAt=1793194086936',
+ 'как ухаживать за поверхностью с помощью света (серия)':'https://ik.imagekit.io/pusaw0w7t/%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%20%D0%B2%D0%B5%D1%80%D1%82%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%20%D0%B3%D0%B8%D1%84/Frame%202131331186.png?updatedAt=1793394962587',
+ 'привносим изменения':'https://ik.imagekit.io/pusaw0w7t/%D0%BF%D1%80%D0%B8%D0%B2%D0%BD%D0%BE%D1%81%D0%B8%D0%BC%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%20-2.jpg?updatedAt=1793194098885',
+ 'это было, но я не уверена':'https://ik.imagekit.io/pusaw0w7t/%D0%AD%D1%82%D0%BE%20%D0%B1%D1%8B%D0%BB%D0%BE,%20%D0%BD%D0%BE%20%D1%8F%20%D0%BD%D0%B5%20%D1%83%D0%B2%D0%B5%D1%80%D0%B5%D0%BD%D0%B0-4.jpg?updatedAt=1793194088949',
+ 'парки района щукино':'https://ik.imagekit.io/pusaw0w7t/%D0%BF%D0%B0%D1%80%D0%BA%D0%B8%20%D1%80%D0%B0%D0%B8%CC%86%D0%BE%D0%BD%D0%B0%20%D0%A9%D1%83%D0%BA%D0%B8%D0%BD%D0%BE-3.jpg?updatedAt=1793194113984'
+};
+function pk(m,t){var k=String(t||'').replace(/\u00A0/g,' ').toLowerCase().trim();
   if(m[k]!==undefined)return m[k];
   if(m[k+' (серия)']!==undefined)return m[k+' (серия)'];
   return m[k.replace(/\s*\(серия\)$/,'')]}
@@ -709,11 +739,11 @@ function aList(t){var u=pk(URLS,t);if(u)return u.slice();
   var a=pk(AF,t);if(a)return a.map(function(n){return fu(PA,n)});
   return urlsFor(t,false)}
 function openList(t){return aList(t)}
-function tileImg(t,id){var v=pk(VT,t);if(v===undefined)return null;if(Array.isArray(v))v=v[id%v.length];return fu(PTV,v)}
+function tileImg(t,id){var fx=TILE_FIX[String(t||'').replace(/\u00A0/g,' ').toLowerCase().trim()];if(fx)return fx;var v=pk(VT,t);if(v===undefined)return null;if(Array.isArray(v))v=v[id%v.length];return fu(PTV,v)}
 [GF,AF].forEach(function(m,mi){Object.keys(m).forEach(function(k){m[k].forEach(function(n){new Image().src=fu(mi?PA:PGF,n)})})});
 URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
 [GF,AF].forEach(function(m,mi){Object.keys(m).forEach(function(k){m[k].forEach(function(n){new Image().src=fu(mi?PA:PGF,n)})})});
-  function keyOf(title){ return String(title||'').toLowerCase().trim(); }
+  function keyOf(title){ return String(title||'').replace(/\u00A0/g,' ').toLowerCase().trim(); }
   function urlsFor(title, home){
     var src = home ? IMG_HOME : IMG;
     var v2 = src[keyOf(title)];
@@ -901,7 +931,7 @@ URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
         if(e.target.closest('.bio-works')){ 
   gridFilter = ai; 
   renderGrid(); 
-  go('works'); 
+  go('works',{keepFilter:true}); 
   return; 
 }
         if(e.target.closest('#vn span')) return;
@@ -1073,9 +1103,8 @@ URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
       var P=['School-logo-RU-M-2line-for_light-rgb.png','DN_LOGO%20(1)%201.png','soundmuseum-ru.png','logo-black.png','dotline_logo.png','%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-10-31%20%D0%B2%2000.44.24.png','photo_2026-10-31%2000.26.48.jpeg'];
       $$('.lgb').forEach(function(a,i){if(P[i])a.innerHTML='<img src="'+pl+P[i]+'" alt="">'});
       var q=$('.qr');if(q)q.innerHTML='<img src="'+PB+'qr-code%20(1).png" alt="QR">';
-      var fp=PB+'%D0%BB%D0%BE%D0%B3%D0%BE%20%D1%84%D1%83%D1%82%D0%B5%D1%80/';
-      var F2=['Group%202136140620.png?updatedAt=1793412954715'];
-      $$('#bar .lg').forEach(function(s,i){if(F2[i])s.innerHTML='<img src="'+fp+F2[i]+'" alt="">'});
+      var fl=PB+'Group%202136140620.png?updatedAt=1793412954715';
+$$('#bar .lg').forEach(function(s,i){ if(i===0) s.innerHTML='<img src="'+fl+'" alt="">'; else s.remove(); });
     })();
     (function(){
       var m=$('#c6 .map');if(!m)return;
@@ -1110,7 +1139,7 @@ URLS[BK+' (серия)'].forEach(function(u){new Image().src=u});
     function showWork(i){
       cw=(i+WK.length)%WK.length;
       var w=WK[cw];
-      var key=w.t.toLowerCase();
+      var key=w.t.replace(/\u00A0/g,' ').toLowerCase().trim();
       var info=WORK_INFO[key];
       if(!info && key.indexOf('ванькины игрушки')===0) info=WORK_INFO['ванькины игрушки'];
       if(!info) info={year:'2026', tech:'Техника уточняется', size:'Размеры уточняются', desc:'Описание готовится.'};
@@ -1209,7 +1238,7 @@ $$('.lb-prev, .lb-next').forEach(function(btn){
               var pl2=Math.min(120,Math.max(80,W*.08)),colW=Math.max(380,Math.min(520,W*.3)),
               minP=pl2+colW+W*.03+50,lines=Math.ceil((A[ai].b||'').length*7.3/colW),
               needH=W*.055+34+lines*21+W*.02+36;
-              X=Math.min(X,Math.max(W-minP-7,W*.3));Y=Math.max(Y,Math.min(needH,H*.9))
+              X=Math.min(X,Math.max(W-minP-7,W*.3));Y=Math.max(Y,Math.min(needH,H*.52))
             } /* <--- ВОТ ЭТА СКОБКА БЫЛА ПОТЕРЯНА */
 
             if(v==='prog'){var e=D[di].e,n=e.length;
@@ -1220,7 +1249,7 @@ $$('.lb-prev, .lb-next').forEach(function(btn){
             if(v==='auth'){
               k = bioOpen ? 0.07 : 0.05;
             } else {
-              k = (({home:.04,prog:.05})[v]||.1)*(TCH?.5:1);
+              k = (({home:.04,prog:.026})[v]||.1)*(TCH?.5:1);
             }
             cx+=(X-cx)*k;cy+=(Y-cy)*k;
             st.style.setProperty('--x',cx.toFixed(1)+'px');
