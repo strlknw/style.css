@@ -416,8 +416,21 @@
 /* авторы: чуть меньше отступ сверху в блоке «об авторе» */
 #bio{padding-top:3.4vw!important}
 
-/* события: вертикальная дата у линии */
-#vd{font-size:clamp(15px,1.9vw,30px);left:calc(var(--x) - .4em);top:16px;color:#fff;mix-blend-mode:difference}
+/* события: крупная вертикальная дата справа от линии, как на макете */
+#vd{
+  font-size:clamp(26px,3.6vw,58px)!important;
+  left:calc(var(--x) + var(--g)/2 + 6px)!important;
+  top:auto!important;
+  bottom:40px!important;
+  color:#2b2b2b!important;
+  mix-blend-mode:normal!important;
+  letter-spacing:-.01em;
+  pointer-events:none;
+  z-index:9;
+}
+@media(max-width:880px){
+  #vd{bottom:84px!important;font-size:clamp(24px,7vw,40px)!important}
+}
 </style>
 
 <div id="app" data-v="home" data-tl="limin-v17">
